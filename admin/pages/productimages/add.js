@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -104,7 +105,7 @@ const Default = ({ getProducts = [] }) => {
             if (res.data.variant == "error") {
               message.error(
                 intl.messages["app.pages.productimages.notAdded"] +
-                res.data.messagge
+                  res.data.messagge
               );
             } else {
               message.success(intl.messages["app.pages.productimages.added"]);

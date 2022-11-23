@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import React, { useEffect } from "react";
 
-import { Layout, Menu } from "antd";
 import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  UploadOutlined,
-  DashboardOutlined,
   CheckSquareOutlined,
-  OrderedListOutlined,
-  DollarOutlined,
+  ChromeOutlined,
+  CloseSquareOutlined,
   CodeSandboxOutlined,
+  ControlOutlined,
+  DashboardOutlined,
   DeleteRowOutlined,
+  DollarOutlined,
+  FileDoneOutlined,
+  FileImageOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  OrderedListOutlined,
   PartitionOutlined,
   PullRequestOutlined,
-  FileDoneOutlined,
   TeamOutlined,
   UsergroupAddOutlined,
-  CloseSquareOutlined,
-  ControlOutlined,
-  ChromeOutlined,
-  FileImageOutlined,
 } from "@ant-design/icons";
+import { Layout, Menu } from "antd";
 
 import { useDispatch, useSelector } from "react-redux";
-import { logout_r, changeCollapsed_r } from "../../../redux/actions";
+import { changeCollapsed_r, logout_r } from "../../../redux/actions";
 
 import AuthService from "../../../util/services/authservice";
 
@@ -75,7 +74,7 @@ const Sidebar = () => {
       >
         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </div>
-      <div className="logo">NextLY</div>
+      <div className="logo">PP SHOP</div>
       <Menu
         theme="dark"
         mode="inline"

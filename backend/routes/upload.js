@@ -1,10 +1,10 @@
+/* eslint-disable indent */
 const express = require("express");
 const router = express.Router();
 const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
 const passport = require("passport");
-
 
 const uploadImage = async (req, res, next) => {
   try {
@@ -613,8 +613,6 @@ router.post(
     }
   }
 );
-
-
 
 //Logo image manage
 

@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_URL, IMG_URL } from "../../../config";
@@ -104,7 +105,7 @@ const Default = ({ getProducts = [], getData = [] }) => {
         if (res.data.variant == "error") {
           message.error(
             intl.messages["app.pages.productimages.notUpdated"] +
-            res.data.messagge
+              res.data.messagge
           );
         } else {
           message.success(intl.messages["app.pages.productimages.updated"]);
