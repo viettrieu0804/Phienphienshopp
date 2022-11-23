@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_URL, IMG_URL } from "../../../config";
@@ -70,7 +71,6 @@ const Default = () => {
   };
 
   const onSubmit = async (Data) => {
-
     if (Data.image != undefined && state.image != Data.image) {
       axios.post(`${API_URL}/upload/deletelogoimage`, { path: state.image });
 
@@ -467,7 +467,7 @@ const Default = () => {
                                   required: true,
                                   message:
                                     intl.messages[
-                                    "app.pages.common.pleaseFill"
+                                      "app.pages.common.pleaseFill"
                                     ],
                                 },
                               ]}
@@ -487,7 +487,7 @@ const Default = () => {
                                   required: true,
                                   message:
                                     intl.messages[
-                                    "app.pages.common.pleaseFill"
+                                      "app.pages.common.pleaseFill"
                                     ],
                                 },
                               ]}
@@ -568,7 +568,7 @@ const Default = () => {
                                   required: true,
                                   message:
                                     intl.messages[
-                                    "app.pages.common.pleaseFill"
+                                      "app.pages.common.pleaseFill"
                                     ],
                                 },
                               ]}
@@ -588,7 +588,7 @@ const Default = () => {
                                   required: true,
                                   message:
                                     intl.messages[
-                                    "app.pages.common.pleaseFill"
+                                      "app.pages.common.pleaseFill"
                                     ],
                                 },
                               ]}
@@ -671,7 +671,7 @@ const Default = () => {
                                   required: true,
                                   message:
                                     intl.messages[
-                                    "app.pages.common.pleaseFill"
+                                      "app.pages.common.pleaseFill"
                                     ],
                                 },
                               ]}
@@ -691,7 +691,7 @@ const Default = () => {
                                   required: true,
                                   message:
                                     intl.messages[
-                                    "app.pages.common.pleaseFill"
+                                      "app.pages.common.pleaseFill"
                                     ],
                                 },
                               ]}
