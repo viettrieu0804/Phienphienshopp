@@ -1,5 +1,5 @@
 {
-  "name": "nextly",
+  "name": "Phienphienshop",
   "version": "1.0.0",
   "description": "",
   "main": "ecosystem.config.js",
@@ -11,12 +11,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ozgurmuraterhan/nextly.git"
+    "url": "git+https://github.com/viettrieu0804/Phienphienshopp"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ozgurmuraterhan/nextly/issues"
-  },
-  "homepage": "https://github.com/ozgurmuraterhan/nextly#readme"
+    "url": "https://github.com/viettrieu0804/Phienphienshopp/issues"
+  }
 }

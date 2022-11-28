@@ -137,16 +137,16 @@ header.site-layout-background {
   box-shadow: inset 0px 0 1px 0px #eee;
   background: #fbfbfb !important;
 }
-.loginBanner {
-  background-image: url("/images/loginbanner.png");
-  background-position: center;
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  right: 0;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
+// .loginBanner {
+//   background-image: url("/images/loginbanner.png");
+//   background-position: center;
+//   width: 500px;
+//   height: 100vh;
+//   position: relative;
+//   right: 0;
+//   background-repeat: no-repeat;
+//   background-size: cover;
+// }
 .dashboardProfile {
   width: 300px;
   margin: -25px 0px 0px -25px;
