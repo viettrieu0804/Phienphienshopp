@@ -184,7 +184,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path.replace("../admin/public/", "/"),
+          path: req.file.path,
         });
       res.send("Image upload failed");
     } else {

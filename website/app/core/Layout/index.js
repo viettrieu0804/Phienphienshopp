@@ -13,7 +13,7 @@ import func from "../../../util/helpers/func";
 import dynamic from "next/dynamic";
 
 const CategoriesMenu = dynamic(() => import("../../components/CategoriesMenu"));
-// const TopMenu = dynamic(() => import("../../components/TopMenu"));
+const TopMenu = dynamic(() => import("../../components/TopMenu"));
 const Footer = dynamic(() => import("../../components/Footer"));
 const Header = dynamic(() => import("../../components/Header"));
 

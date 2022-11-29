@@ -12,7 +12,7 @@ const Default = () => {
    const { brands } = useSelector(({ brands }) => brands);
 
    return (
-      <div className="container-custom  relative mt-4 h-28">
+      <div className="container-custom  relative mt-4 h-28 ">
          <div className="position-absolute container px-xs-0">
             <div className="top-brands-arrow-left">
                <DoubleLeftOutlined />

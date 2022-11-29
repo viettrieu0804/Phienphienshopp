@@ -13,8 +13,8 @@ const Default = ({ state = [], title = { title: "", description: "" } }) => {
    return (
       <div className=" container-custom my-9 pb-6  ">
          <div className="w-full text-center float-left   mb-5 mt-3">
-            <h2>{title.title} </h2>
-            <h3 className="text-lg	">{title.description} </h3>
+            <h2 className="text-xl font-bold">Sale</h2>
+            <h3 className="text-lg	">sale products holiday </h3>
          </div>
          <div className=" w-full  rounded-lg gap-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {state.map((val) => (
@@ -25,8 +25,8 @@ const Default = ({ state = [], title = { title: "", description: "" } }) => {
                            loader={({ src }) => src}
                            src={`${IMG_URL + val.image}`}
                            className="w-full h-full group-hover:scale-105   transition-all rounded-t"
-                           height="168"
-                           width="288"
+                           height="268"
+                           width="400"
                            alt={val.title + " "}
                         />
                         <div className="w-full text-center mt-3 font-bold">{val.title}</div>

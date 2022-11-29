@@ -124,7 +124,7 @@ const Default = ({ dataCityOption = [], dataCity = [], getData = [] }) => {
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <Select onChange={changePrefix} style={{ width: 70 }}>
-        <Select.Option value="90">+90</Select.Option>
+        <Select.Option value="84">+84</Select.Option>
       </Select>
     </Form.Item>
   );
