@@ -18,7 +18,7 @@ module.exports = {
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     indent: ["error", 3],
-    "linebreak-style": ["error", "unix"],
+    "linebreak-style": ["error", "windowns"],
     quotes: ["error", "double"],
     semi: ["error", "always"],
   },
