@@ -218,7 +218,7 @@ const Default = () => {
                 message: intl.messages["app.pages.common.pleaseFill"],
               },
             ]}
-            extra="$,€,₺,USD,CAD"
+            extra="$,đ,USD,VNĐ"
           >
             <Input />
           </Form.Item>
