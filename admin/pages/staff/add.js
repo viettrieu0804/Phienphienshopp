@@ -235,7 +235,7 @@ const Default = () => {
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <Select style={{ width: 70 }}>
-        <Select.Option value="90">+90</Select.Option>
+        <Select.Option value="84">+84</Select.Option>
       </Select>
     </Form.Item>
   );
@@ -347,7 +347,7 @@ const Default = () => {
               style={{ width: "100%" }}
             />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             name="image"
             label={"Avatar " + intl.messages["app.pages.common.image"]}
           >
@@ -364,7 +364,7 @@ const Default = () => {
                 {fileList.length < 1 && "+ Upload"}
               </Upload>
             </ImgCrop>
-          </Form.Item>
+          </Form.Item> */}
 
           {user?.role?.superadmin ? (
             <Form.Item

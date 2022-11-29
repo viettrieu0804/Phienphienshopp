@@ -51,10 +51,10 @@ const SignInPage = () => {
 
   return (
     <>
-      <Row gutter={[16, 16]}>
-        <Col sm={6} offset={3} xs={18} className="my-5">
+      <Row gutter={[16, 16]} className="flex justify-center mt-20">
+        <Col sm={6} offset={3} xs={18} className="my-5 ">
           <Typography.Title className="text-center mt-5">
-            NextLy
+            PhienPhien Shop 
           </Typography.Title>
           <div level={5} className="text-center fs-10 mb-5">
             Fortune favors the bold.
@@ -134,9 +134,9 @@ const SignInPage = () => {
           </Select>
         </Col>
         <Col sm={3} xs={0} />
-        <Col sm={12} xs={24}>
+        {/* <Col sm={12} xs={24}>
           <div className="loginBanner"></div>
-        </Col>
+        </Col> */}
       </Row>
     </>
   );

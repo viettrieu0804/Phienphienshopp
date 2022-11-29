@@ -18,8 +18,7 @@ const Default = ({ onSubmitSignup }) => {
   const prefixSelector = (
     <Form.Item name="prefix" noStyle initialValue={"90"}>
       <Select onChange={changePrefix} style={{ width: 70 }}>
-        <Select.Option value="90">+84</Select.Option>
-        <Select.Option value="1">+1</Select.Option>
+        <Select.Option value="84">+84</Select.Option>
       </Select>
     </Form.Item>
   );
