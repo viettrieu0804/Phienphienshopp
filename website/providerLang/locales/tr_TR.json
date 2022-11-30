@@ -1,8 +1,8 @@
 {
-  "app.userAuth.signIn": "Giriş Yap",
+  "app.userAuth.signIn": "Đăng kí",
   "app.userAuth.Forgot Password": "Şifremi Unuttum",
-  "app.userAuth.Password": "Şifre",
-  "app.userAuth.E-mail": "E-Posta",
+  "app.userAuth.Password": "password",
+  "app.userAuth.E-mail": "E-mail",
   "app.userAuth.The input is not valid E-mail!": "Geçerli e-posta giriniz!",
   "app.userAuth.Please input your Password!": "Lütfen şifrenizi giriniz!",
   "app.userAuth.Login Successfully.": "Giriş Başarılı :)",
