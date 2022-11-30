@@ -40,7 +40,7 @@ const Default = ({ dataCityOption = [], dataCity = [] }) => {
     surname: "",
     password: "",
     phone: "",
-    prefix: "90",
+    prefix: "84",
     images: "",
     _id: id,
   });
