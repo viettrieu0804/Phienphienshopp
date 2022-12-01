@@ -84,7 +84,7 @@ const Default = ({ getProducts = [], getData = [] }) => {
 
   const onSubmit = async (Data) => {
     if (Data.image != undefined && state.image != Data.image) {
-      axios.post(`${API_URL}/upload/deleteproductimage`, { path: state.image });
+      await axios.post(`${API_URL}/upload/deleteproductimage`, { path: state.image });
 
       const formData = new FormData();
       formData.append("image", Data.image.file.originFileObj);
@@ -94,7 +94,8 @@ const Default = ({ getProducts = [], getData = [] }) => {
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      Data["image"] = dataImage.data.path.replace("../admin/public/", "/");
+      const newLocal = "../admin/public/";
+      Data["image"] = dataImage.data.path.replace(newLocal, "/");
     }
 
     //Data["image"] = state.image

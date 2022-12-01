@@ -6,10 +6,9 @@
 
 @layer base {
   html,
-
   body {
     height: 100%;
-    display: block!important;
+    display: block !important;
     background-color: #fbfbfb;
     @apply antialiased;
   }
@@ -29,7 +28,7 @@
   h6 {
     @apply text-lg;
   }
- 
+
   .container-custom {
     @apply xl:w-9/12 w-full lg:px-5 px-3 mx-auto;
   }
@@ -58,4 +57,17 @@ li .ant-menu-submenu-title .ant-menu-title-content {
 .hiddenArrowInputNumber::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+.swiper-button-next.swiper-button-disabled,
+.swiper-button-prev.swiper-button-disabled {
+  color: #616161;
+}
+
+.swiper-button-prev {
+  color: #616161 !important;
+  opacity: 0.35;
+}
+.swiper-button-next {
+  color: #616161 !important;
+  opacity: 0.35;
 }
