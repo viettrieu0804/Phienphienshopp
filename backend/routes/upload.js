@@ -232,7 +232,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path,
+          path: "/images/uploads/cargoes/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {

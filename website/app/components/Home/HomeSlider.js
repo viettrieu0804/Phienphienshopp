@@ -23,14 +23,14 @@ const Default = ({ state = [] }) => {
   return (
     <div className=" relative float-left homeSliderReslative">
       <div className="position-absolute w-full  ">
-        {/* <div className="slider-arrow-left absolute z-40 left-2  top-1/2">
+        <div className="slider-arrow-left absolute z-40 left-2  top-1/2">
           <DoubleLeftOutlined />
         </div>
         <div className="slider-arrow-right absolute z-40 right-2  top-1/2">
           <DoubleRightOutlined />
-        </div> */}
+        </div>
 
-        {/* <Swiper
+        <Swiper
           spaceBetween={0}
           navigation={{
             prevEl: ".slider-arrow-left",
@@ -40,7 +40,7 @@ const Default = ({ state = [] }) => {
             delay: 15000,
             disableOnInteraction: false,
           }}
-          className="w-full"
+          className="w-full h-screen"
         >
           {state.map((val) => (
             <SwiperSlide key={val._id}>
@@ -53,48 +53,11 @@ const Default = ({ state = [] }) => {
                       width="1680"
                       style={{ width: "100%" }}
                       alt={val.title + "."}
+                      className="absolute -z-10 w-full h-full "
                     />
                   </a>
                 </Link>
               </div>
-            </SwiperSlide>
-          ))}
-        </Swiper> */}
-        <Swiper
-          spaceBetween={30}
-          centeredSlides={true}
-          effect={"fade"}
-          parallax={true}
-          loop={true}
-          speed={1000}
-          autoplay={{
-            delay: 15000,
-            disableOnInteraction: false,
-          }}
-          pagination={{
-            clickable: true,
-          }}
-          navigation={true}
-          modules={[EffectFade, Autoplay, Pagination, Navigation, Parallax]}
-          className="mySwiper h-[500px] lg:h-screen "
-        >
-          {state.map((val) => (
-            <SwiperSlide>
-              <div className="item">
-                <Link href={val.link}>
-                  <a>
-                    <img
-                      src={`${IMG_URL + val.image}`}
-                      height="500"
-                      width="1680"
-                      style={{ width: "100%" }}
-                      alt={val.title + "."}
-                      className="absolute -z-10 w-full h-full object-cover top-0"
-                    />
-                  </a>
-                </Link>
-              </div>
-
               <div
                 data-aos="fade-down"
                 data-aos-easing="linear"
