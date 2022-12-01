@@ -103,7 +103,7 @@
   "app.pages.cargoes.update": "cập nhật vận chuyển",
   "app.pages.cargoes.searchLink": "Liên kết tìm kiếm hàng hóa",
   "app.pages.category.list": "Danh sách chuyên mục",
-  "app.pages.category.rootCategory": "▣ Kök Kategori ",
+  "app.pages.category.rootCategory": "▣  ",
   "app.pages.category.edit": "Kategori Düzenle",
   "app.pages.category.added": "Kategori eklendi",
   "app.pages.category.notAdded": "Kategori eklenemedi!",
