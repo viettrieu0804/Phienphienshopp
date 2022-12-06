@@ -11,9 +11,6 @@ let usersData = require("../db.json/nextly.users.json");
 let Variants = require("../models/variants.model");
 let variantsData = require("../db.json/nextly.variants.json");
 
-let Turkey = require("../models/turkey.model");
-let turkeyData = require("../db.json/nextly.turkey.json");
-
 let Topmenu = require("../models/topmenu.model");
 let topmenuData = require("../db.json/nextly.topmenu.json");
 
@@ -34,9 +31,6 @@ let ordersData = require("../db.json/nextly.orders.json");
 
 let Homeslider = require("../models/homeslider.model");
 let homesliderData = require("../db.json/nextly.homeslider.json");
-
-let Country = require("../models/country.model");
-let countryData = require("../db.json/nextly.country.json");
 
 let Categories = require("../models/categories.model");
 let categoriesData = require("../db.json/nextly.categories.json");
@@ -108,27 +102,6 @@ router.route("/").get((req, res) => {
           console.log(err);
         } else {
           console.log("add Variants  data");
-        }
-      });
-    }
-  });
-
-  Turkey.find().then((val) => {
-    if (val.length > 0) {
-      console.log("have Turkey  ");
-    } else {
-
-      const strReplace = JSON.stringify(turkeyData)
-        .replaceAll(/\\"/g, "")
-        .replaceAll("ObjectId(", "")
-        .replaceAll(')"', '"')
-
-
-      Turkey.insertMany(JSON.parse(strReplace), function (err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("add Turkey  data");
         }
       });
     }
@@ -277,27 +250,6 @@ router.route("/").get((req, res) => {
           console.log(err);
         } else {
           console.log("add Homeslider  data");
-        }
-      });
-    }
-  });
-
-  Country.find().then((val) => {
-    if (val.length > 0) {
-      console.log("have Country  ");
-    } else {
-
-      const strReplace = JSON.stringify(countryData)
-        .replaceAll(/\\"/g, "")
-        .replaceAll("ObjectId(", "")
-        .replaceAll(')"', '"')
-
-
-      Country.insertMany(JSON.parse(strReplace), function (err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("add Country  data");
         }
       });
     }
