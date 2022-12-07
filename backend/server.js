@@ -39,11 +39,6 @@ connection.once("open", () => {
   console.log("connection MongoDB");
 });
 
-//instalition db import
-const installDB = require("./routes/installdb.js");
-app.use("/installdb", installDB);
-//instalition
-
 //Private Root import
 const userRouter = require("./routes/users");
 const uploadRouter = require("./routes/upload");
