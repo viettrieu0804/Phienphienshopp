@@ -39,18 +39,11 @@ connection.once("open", () => {
   console.log("connection MongoDB");
 });
 
-//instalition db import
-const installDB = require("./routes/installdb.js");
-app.use("/installdb", installDB);
-//instalition
-
 //Private Root import
-const turkeyRouter = require("./routes/turkey");
 const userRouter = require("./routes/users");
 const uploadRouter = require("./routes/upload");
 const staffRouter = require("./routes/staff");
 const customerRouter = require("./routes/customers");
-const countryRouter = require("./routes/country");
 const productsRouter = require("./routes/products");
 const productimagesRouter = require("./routes/productimages");
 const variantsRouter = require("./routes/variants");
@@ -87,13 +80,11 @@ app.use("/topmenu", topmenuRouter);
 app.use("/users", userRouter);
 app.use("/staff", staffRouter);
 app.use("/customers", customerRouter);
-app.use("/country", countryRouter);
 app.use("/products", productsRouter);
 app.use("/productimages", productimagesRouter);
 app.use("/variants", variantsRouter);
 app.use("/categories", categoriesRouter);
 app.use("/brands", brandsRouter);
-app.use("/turkey", turkeyRouter);
 app.use("/upload", uploadRouter);
 app.use("/settings", settingsRouter);
 app.use("/basket", basketRouter);
