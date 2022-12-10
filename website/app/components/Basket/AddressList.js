@@ -8,6 +8,7 @@ import { getBasket_r, updateBasket_r } from "../../../redux/actions";
 import { useIntl } from "react-intl";
 import AuthService from "../../../util/services/authservice";
 
+
 const Default = () => {
    const intl = useIntl();
 
@@ -22,19 +23,12 @@ const Default = () => {
    const [billingAdressSame, seTbillingAdressSame] = useState(true);
    const [newAddress, seTnewAddress] = useState({ open: false, id: null });
 
-   const [city, seTcity] = useState([]);
-   const [country, seTcountry] = useState([]);
-   const [selectedO, seTselectedO] = useState({});
-   const [cityOption, seTcityOption] = useState([]);
-   const [countryOption, seTcountryOption] = useState([]);
-   const [ilceOption, seTilceOption] = useState([]);
-   const [semtOption, seTsemtOption] = useState([]);
-   const [mahalleOption, seTmahalleOption] = useState([]);
+
+console.log("newAddress",newAddress);
 
    const [form] = Form.useForm();
 
    const dispatch = useDispatch();
-
    const updateAddress = async (newAddresArr) => {
       if (isAuthenticated) {
          await axios
@@ -74,34 +68,6 @@ const Default = () => {
          message.success({ content: "Next Stage :)", duration: 3 });
          dispatch(updateBasket_r([post]));
       }
-   };
-
-   const getCity = () => {
-      axios.get(`${API_URL}/turkey`).then((getData) => {
-         const dataManipulate = [];
-         for (const i in getData.data) {
-            dataManipulate.push({
-               label: getData.data[i].Il,
-               value: getData.data[i].Il,
-            });
-         }
-         seTcityOption(dataManipulate);
-         seTcity(getData.data);
-      });
-   };
-
-   const getCountry = () => {
-      axios.get(`${API_URL}/country`).then((getData) => {
-         const dataManipulate = [];
-         for (const i in getData.data) {
-            dataManipulate.push({
-               label: getData.data[i].name,
-               value: getData.data[i].name,
-            });
-         }
-         seTcountryOption(dataManipulate);
-         seTcountry(getData.data);
-      });
    };
 
    const getAddress = () => {
@@ -157,7 +123,7 @@ const Default = () => {
    };
 
    useEffect(() => {
-      getCountry();
+      // getCountry();
       getAddress();
       getSelectedAddress();
    }, [basket[0]]);
@@ -308,8 +274,10 @@ const Default = () => {
             </div>
 
             <Drawer
+               // style={{"style="}}
                title="Address"
                placement="left"
+               closable={false}
                onClose={() => {
                   seTnewAddress({ ...newAddress, open: !newAddress.open });
                }}
@@ -354,34 +322,11 @@ const Default = () => {
                      className="float-left w-full mx-0 px-0"
                      fieldKey="country_id"
                   >
-                     <Select
-                        autoComplete="none"
-                        showSearch
-                        options={countryOption}
-                        placeholder="Search to Country"
-                        optionFilterProp="children"
-                        filterOption={(input, option) =>
-                           option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        }
-                        onChange={(selected) => {
-                           if (selected == "Turkey") {
-                              getCity();
-                           } else {
-                              const citydata = country.filter((x) => x.name === selected);
-                              const dataManipulate = [];
-
-                              for (const i in citydata[0].states) {
-                                 dataManipulate.push({
-                                    label: citydata[0].states[i].name,
-                                    value: citydata[0].states[i].name,
-                                 });
-                              }
-
-                              seTcityOption(dataManipulate);
+                     <Input
+                           placeholder={
+                              intl.messages["app.pages.customers.addressCountry"]
                            }
-                           seTselectedO({ ...selectedO, selectedCountry: selected });
-                        }}
-                     />
+                        />
                   </Form.Item>
 
                   <Form.Item
@@ -390,33 +335,11 @@ const Default = () => {
                      fieldKey="city_id"
                      rules={[{ required: true, message: "Missing Area" }]}
                   >
-                     <Select
-                        autoComplete="none"
-                        showSearch
-                        options={cityOption}
-                        placeholder={intl.messages["app.pages.customers.addressCity"]}
-                        optionFilterProp="children"
-                        filterOption={(input, option) =>
-                           option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        }
-                        onChange={(selected) => {
-                           if (selectedO.selectedCountry == "Turkey") {
-                              const ilce = city.filter((x) => x.Il === selected);
-                              const dataManipulate = [];
-                              for (const i in ilce[0].Ilce) {
-                                 dataManipulate.push({
-                                    label: ilce[0].Ilce[i].Ilce,
-                                    value: ilce[0].Ilce[i].Ilce,
-                                 });
-                              }
-                              seTselectedO({ ...selectedO, selectedCity: selected });
-                              seTilceOption({
-                                 option: dataManipulate,
-                                 data: ilce[0].Ilce,
-                              });
+                       <Input
+                           placeholder={
+                              intl.messages["app.pages.customers.addressCity"]
                            }
-                        }}
-                     />
+                        />
                   </Form.Item>
 
                   <Form.Item
@@ -425,40 +348,10 @@ const Default = () => {
                      fieldKey="town_id"
                      rules={[{ required: true, message: "Missing Area" }]}
                   >
-                     {selectedO.selectedCountry == "Turkey" ? (
-                        <Select
-                           showSearch
-                           options={ilceOption.option}
-                           name="town_id"
-                           placeholder={intl.messages["app.pages.customers.addressTown"]}
-                           optionFilterProp="children"
-                           filterOption={(input, option) =>
-                              option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                           }
-                           onChange={(selected) => {
-                              const data = ilceOption.data.filter(
-                                 (x) => x.Ilce === selected
-                              );
-                              const dataManipulate = [];
-                              for (const i in data[0].Semt) {
-                                 dataManipulate.push({
-                                    label: data[0].Semt[i].Semt,
-                                    value: data[0].Semt[i].Semt,
-                                 });
-                              }
-                              seTselectedO({ ...selectedO, selectedIlce: selected });
-                              seTsemtOption({
-                                 option: dataManipulate,
-                                 data: data[0].Semt,
-                              });
-                           }}
-                        />
-                     ) : (
-                        <Input
+                      <Input
                            placeholder={intl.messages["app.pages.customers.addressTown"]}
                            autoComplete="none"
                         />
-                     )}
                   </Form.Item>
 
                   <Form.Item
@@ -467,45 +360,10 @@ const Default = () => {
                      fieldKey="district_id"
                      rules={[{ required: true, message: "Missing Area" }]}
                   >
-                     {selectedO.selectedCountry == "Turkey" ? (
-                        <Select
-                           showSearch
-                           autoComplete="none"
-                           options={semtOption.option}
-                           placeholder={
-                              intl.messages["app.pages.customers.addressDistrict"]
-                           }
-                           name="district_id"
-                           optionFilterProp="children"
-                           filterOption={(input, option) =>
-                              option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                           }
-                           onChange={(selected) => {
-                              const data = semtOption.data.filter(
-                                 (x) => x.Semt === selected
-                              );
-                              const dataManipulate = [];
-                              for (const i in data[0].Mahalle) {
-                                 dataManipulate.push({
-                                    label: data[0].Mahalle[i].Mahalle,
-                                    value: data[0].Mahalle[i].Mahalle,
-                                 });
-                              }
-                              seTselectedO({ ...selectedO, selectedSemt: selected });
-                              seTmahalleOption({
-                                 option: dataManipulate,
-                                 data: data[0].Mahalle,
-                              });
-                           }}
-                        />
-                     ) : (
-                        <Input
-                           placeholder={
-                              intl.messages["app.pages.customers.addressDistrict"]
-                           }
+                   <Input
+                           placeholder={intl.messages["app.pages.customers.addressDistrict"]}
                            autoComplete="none"
                         />
-                     )}
                   </Form.Item>
 
                   <Form.Item
@@ -515,29 +373,11 @@ const Default = () => {
                      autoComplete="none"
                      rules={[{ required: true, message: "Missing Area" }]}
                   >
-                     {selectedO.selectedCountry == "Turkey" ? (
-                        <Select
-                           showSearch
-                           options={mahalleOption.option}
-                           placeholder={
-                              intl.messages["app.pages.customers.addressNeighbour"]
-                           }
-                           name="village_id"
-                           optionFilterProp="children"
-                           filterOption={(input, option) =>
-                              option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                           }
-                           onChange={(selected) => {
-                              seTselectedO({ ...selectedO, selectedMahalle: selected });
-                           }}
-                        />
-                     ) : (
-                        <Input
+                    <Input
                            placeholder={
                               intl.messages["app.pages.customers.addressNeighbour"]
                            }
                         />
-                     )}
                   </Form.Item>
                   <Form.Item
                      className="float-left w-full  mx-0 px-0"

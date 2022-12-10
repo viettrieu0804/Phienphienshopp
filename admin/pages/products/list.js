@@ -37,6 +37,16 @@ const Default = ({ getData = [] }) => {
   };
 
   const columns = [
+    // {
+    //   title: intl.messages["app.pages.common.image"],
+    //   dataIndex: "image",
+    //   key: "image",
+    //   render: (text, record) => (
+    //     <>
+    //       <Image src={IMG_URL + record.image} height={80} />
+    //     </>
+    //   ),
+    // },
     {
       title: intl.messages["app.pages.common.title"],
       dataIndex: "title",
@@ -80,6 +90,13 @@ const Default = ({ getData = [] }) => {
         </>
       ),
     },
+    {
+      title: intl.messages["app.pages.common.qty"],
+      dataIndex: "qty",
+      key: "qty",
+      render: (text)=> <span>{text}</span>
+    },
+
     {
       title: intl.messages["app.pages.common.action"],
       key: "_id",
@@ -127,6 +144,7 @@ const Default = ({ getData = [] }) => {
         }
       })
       .catch((err) => console.log(err));
+      console.log(data);
   };
 
   useEffect(() => {

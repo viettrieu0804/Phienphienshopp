@@ -10,8 +10,7 @@ const uploadImage = async (req, res, next) => {
   try {
     if (req.body[0]) {
       // to declare some path to store your converted image
-      const path =
-        "../admin/public/images/uploads/staff/" + Date.now() + ".png";
+      const path = "../admin/public/images/uploads/staff/" + Date.now() + ".png";
 
       const imgdata = req.body[0].thumbUrl;
       if (!imgdata) {
@@ -32,55 +31,45 @@ const uploadImage = async (req, res, next) => {
   }
 };
 
-router.post(
-  "/uploadstaffavatar",
-  passport.authenticate("jwt", { session: false }),
-  uploadImage,
-  (req, res) => {
-    const rolesControl = req.user.role;
+router.post("/uploadstaffavatar", passport.authenticate("jwt", { session: false }), uploadImage, (req, res) => {
+  const rolesControl = req.user.role;
 
-    if (rolesControl["staff/add"]) {
-      if (req.file) return res.json({ msg: "image successfully uploaded" });
-      res.send("Image upload failed");
-    } else {
-      res.status(403).json({
-        message: {
-          messagge: "You are not authorized, go away!",
-          variant: "error",
-        },
-      });
-    }
+  if (rolesControl["staff/add"]) {
+    if (req.file) return res.json({ msg: "image successfully uploaded" });
+    res.send("Image upload failed");
+  } else {
+    res.status(403).json({
+      message: {
+        messagge: "You are not authorized, go away!",
+        variant: "error",
+      },
+    });
   }
-);
+});
 
-router.post(
-  "/deletestaffavatar",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const rolesControl = req.user.role;
-    if (rolesControl["staff/id"]) {
-      try {
-        fs.unlinkSync("../admin/public" + req.body.path);
-      } catch (e) {
-        console.log("not image");
-      }
-    } else {
-      res.status(403).json({
-        message: {
-          messagge: "You are not authorized, go away!",
-          variant: "error",
-        },
-      });
+router.post("/deletestaffavatar", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const rolesControl = req.user.role;
+  if (rolesControl["staff/id"]) {
+    try {
+      fs.unlinkSync("../admin/public" + req.body.path);
+    } catch (e) {
+      console.log("not image");
     }
+  } else {
+    res.status(403).json({
+      message: {
+        messagge: "You are not authorized, go away!",
+        variant: "error",
+      },
+    });
   }
-);
+});
 
 const uploadImageCustomer = async (req, res, next) => {
   try {
     if (req.body[0]) {
       // to declare some path to store your converted image
-      const path =
-        "../admin/public/images/uploads/customers/" + Date.now() + ".png";
+      const path = "/images/uploads/cargoes/" + req.file.filename + Date.now() + ".png";
 
       const imgdata = req.body[0].thumbUrl;
       if (!imgdata) {
@@ -122,27 +111,23 @@ router.post(
   }
 );
 
-router.post(
-  "/deletecustomersavatar",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const rolesControl = req.user.role;
-    if (rolesControl["customers/id"]) {
-      try {
-        fs.unlinkSync("../admin/public" + req.body.path);
-      } catch (e) {
-        console.log("not image");
-      }
-    } else {
-      res.status(403).json({
-        message: {
-          messagge: "You are not authorized, go away!",
-          variant: "error",
-        },
-      });
+router.post("/deletecustomersavatar", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const rolesControl = req.user.role;
+  if (rolesControl["customers/id"]) {
+    try {
+      fs.unlinkSync("../admin/public" + req.body.path);
+    } catch (e) {
+      console.log("not image");
     }
+  } else {
+    res.status(403).json({
+      message: {
+        messagge: "You are not authorized, go away!",
+        variant: "error",
+      },
+    });
   }
-);
+});
 
 const storageProduct = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -154,13 +139,7 @@ const storageProduct = multer.diskStorage({
 });
 
 const fileFilterProduct = (req, file, cb) => {
-  const allowedFileTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/gif",
-    "image/GIF",
-  ];
+  const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/GIF"];
   if (allowedFileTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
@@ -187,7 +166,7 @@ router.post(
         console.log(a);
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path,
+          path: "/images/uploads/products/" + req.file.filename,
         });
       }
       res.send("Image upload failed");
@@ -202,27 +181,23 @@ router.post(
   }
 );
 
-router.post(
-  "/deleteproductimage",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const rolesControl = req.user.role;
-    if (rolesControl["productimages/id"]) {
-      try {
-        fs.unlinkSync("../admin/public" + req.body.path);
-      } catch (e) {
-        console.log("not image");
-      }
-    } else {
-      res.status(403).json({
-        message: {
-          messagge: "You are not authorized, go away!",
-          variant: "error",
-        },
-      });
+router.post("/deleteproductimage", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const rolesControl = req.user.role;
+  if (rolesControl["productimages/id"]) {
+    try {
+      fs.unlinkSync("../admin/public" + req.body.path);
+    } catch (e) {
+      console.log("not image");
     }
+  } else {
+    res.status(403).json({
+      message: {
+        messagge: "You are not authorized, go away!",
+        variant: "error",
+      },
+    });
   }
-);
+});
 
 //cargo image manage
 
@@ -236,13 +211,7 @@ const storageCargo = multer.diskStorage({
 });
 
 const fileFilterCargo = (req, file, cb) => {
-  const allowedFileTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/gif",
-    "image/GIF",
-  ];
+  const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/GIF"];
   if (allowedFileTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
@@ -267,7 +236,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path,
+          path: "/images/uploads/cargoes/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {
@@ -281,27 +250,23 @@ router.post(
   }
 );
 
-router.post(
-  "/deletecargoimage",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const rolesControl = req.user.role;
-    if (rolesControl["cargoes/id"]) {
-      try {
-        fs.unlinkSync("../admin/public" + req.body.path);
-      } catch (e) {
-        console.log("not image");
-      }
-    } else {
-      res.status(403).json({
-        message: {
-          messagge: "You are not authorized, go away!",
-          variant: "error",
-        },
-      });
+router.post("/deletecargoimage", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const rolesControl = req.user.role;
+  if (rolesControl["cargoes/id"]) {
+    try {
+      fs.unlinkSync("../admin/public" + req.body.path);
+    } catch (e) {
+      console.log("not image");
     }
+  } else {
+    res.status(403).json({
+      message: {
+        messagge: "You are not authorized, go away!",
+        variant: "error",
+      },
+    });
   }
-);
+});
 
 //orderstatus image manage
 
@@ -315,14 +280,7 @@ const storageOrderstatus = multer.diskStorage({
 });
 
 const fileFilterOrderstatus = (req, file, cb) => {
-  const allowedFileTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/gif",
-    "image/GIF",
-    "image/svg+xml",
-  ];
+  const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/GIF", "image/svg+xml"];
   if (allowedFileTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
@@ -346,7 +304,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path,
+          path: "/images/uploads/orderstatus/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {
@@ -360,27 +318,23 @@ router.post(
   }
 );
 
-router.post(
-  "/deleteorderstatusimage",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const rolesControl = req.user.role;
-    if (rolesControl["orderstatus/id"]) {
-      try {
-        fs.unlinkSync("../admin/public" + req.body.path);
-      } catch (e) {
-        console.log("not image");
-      }
-    } else {
-      res.status(403).json({
-        message: {
-          messagge: "You are not authorized, go away!",
-          variant: "error",
-        },
-      });
+router.post("/deleteorderstatusimage", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const rolesControl = req.user.role;
+  if (rolesControl["orderstatus/id"]) {
+    try {
+      fs.unlinkSync("../admin/public" + req.body.path);
+    } catch (e) {
+      console.log("not image");
     }
+  } else {
+    res.status(403).json({
+      message: {
+        messagge: "You are not authorized, go away!",
+        variant: "error",
+      },
+    });
   }
-);
+});
 
 //payment methods image manage
 
@@ -394,14 +348,7 @@ const storagePaymentmethods = multer.diskStorage({
 });
 
 const fileFilterPaymentmethods = (req, file, cb) => {
-  const allowedFileTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/gif",
-    "image/GIF",
-    "image/svg+xml",
-  ];
+  const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/GIF", "image/svg+xml"];
   if (allowedFileTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
@@ -425,7 +372,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path,
+          path: "/images/uploads/paymentmethods/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {
@@ -439,27 +386,23 @@ router.post(
   }
 );
 
-router.post(
-  "/deletepaymentmethodsimage",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const rolesControl = req.user.role;
-    if (rolesControl["paymentmethods/id"]) {
-      try {
-        fs.unlinkSync("../admin/public" + req.body.path);
-      } catch (e) {
-        console.log("not image");
-      }
-    } else {
-      res.status(403).json({
-        message: {
-          messagge: "You are not authorized, go away!",
-          variant: "error",
-        },
-      });
+router.post("/deletepaymentmethodsimage", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const rolesControl = req.user.role;
+  if (rolesControl["paymentmethods/id"]) {
+    try {
+      fs.unlinkSync("../admin/public" + req.body.path);
+    } catch (e) {
+      console.log("not image");
     }
+  } else {
+    res.status(403).json({
+      message: {
+        messagge: "You are not authorized, go away!",
+        variant: "error",
+      },
+    });
   }
-);
+});
 
 //brands image manage
 
@@ -473,14 +416,7 @@ const storageBrands = multer.diskStorage({
 });
 
 const fileFilterBrands = (req, file, cb) => {
-  const allowedFileTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/gif",
-    "image/GIF",
-    "image/svg+xml",
-  ];
+  const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/GIF", "image/svg+xml"];
   if (allowedFileTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
@@ -504,7 +440,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path,
+          path: "/images/uploads/cargoes/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {
@@ -518,27 +454,23 @@ router.post(
   }
 );
 
-router.post(
-  "/deletebrandsimage",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const rolesControl = req.user.role;
-    if (rolesControl["brands/id"]) {
-      try {
-        fs.unlinkSync("../admin/public" + req.body.path);
-      } catch (e) {
-        console.log("not image");
-      }
-    } else {
-      res.status(403).json({
-        message: {
-          messagge: "You are not authorized, go away!",
-          variant: "error",
-        },
-      });
+router.post("/deletebrandsimage", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const rolesControl = req.user.role;
+  if (rolesControl["brands/id"]) {
+    try {
+      fs.unlinkSync("../admin/public" + req.body.path);
+    } catch (e) {
+      console.log("not image");
     }
+  } else {
+    res.status(403).json({
+      message: {
+        messagge: "You are not authorized, go away!",
+        variant: "error",
+      },
+    });
   }
-);
+});
 
 //homeslider image manage
 
@@ -552,13 +484,7 @@ const storagehomeslider = multer.diskStorage({
 });
 
 const fileFilterhomeslider = (req, file, cb) => {
-  const allowedFileTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/gif",
-    "image/GIF",
-  ];
+  const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/GIF"];
   if (allowedFileTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
@@ -582,7 +508,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path,
+          path: "/images/uploads/homeslider/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {
@@ -596,27 +522,23 @@ router.post(
   }
 );
 
-router.post(
-  "/deletehomesliderimage",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const rolesControl = req.user.role;
-    if (rolesControl["homeslider/id"]) {
-      try {
-        fs.unlinkSync("../admin/public" + req.body.path);
-      } catch (e) {
-        console.log("not image");
-      }
-    } else {
-      res.status(403).json({
-        message: {
-          messagge: "You are not authorized, go away!",
-          variant: "error",
-        },
-      });
+router.post("/deletehomesliderimage", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const rolesControl = req.user.role;
+  if (rolesControl["homeslider/id"]) {
+    try {
+      fs.unlinkSync("../admin/public" + req.body.path);
+    } catch (e) {
+      console.log("not image");
     }
+  } else {
+    res.status(403).json({
+      message: {
+        messagge: "You are not authorized, go away!",
+        variant: "error",
+      },
+    });
   }
-);
+});
 
 //Logo image manage
 
@@ -630,13 +552,7 @@ const storageLogo = multer.diskStorage({
 });
 
 const fileFilterLogo = (req, file, cb) => {
-  const allowedFileTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/gif",
-    "image/GIF",
-  ];
+  const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/GIF"];
   if (allowedFileTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
@@ -660,7 +576,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path,
+          path: "/images/uploads/logo/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {
@@ -674,26 +590,22 @@ router.post(
   }
 );
 
-router.post(
-  "/deletelogoimage",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const rolesControl = req.user.role;
-    if (rolesControl["superadmin"]) {
-      try {
-        fs.unlinkSync("../admin/public" + req.body.path);
-      } catch (e) {
-        console.log("not image");
-      }
-    } else {
-      res.status(403).json({
-        message: {
-          messagge: "You are not authorized, go away!",
-          variant: "error",
-        },
-      });
+router.post("/deletelogoimage", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const rolesControl = req.user.role;
+  if (rolesControl["superadmin"]) {
+    try {
+      fs.unlinkSync("../admin/public" + req.body.path);
+    } catch (e) {
+      console.log("not image");
     }
+  } else {
+    res.status(403).json({
+      message: {
+        messagge: "You are not authorized, go away!",
+        variant: "error",
+      },
+    });
   }
-);
+});
 
 module.exports = router;

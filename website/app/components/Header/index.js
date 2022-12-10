@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
 import AuthService from "../../../util/services/authservice";
 import { useDispatch, useSelector } from "react-redux";
-import { login_r, isAuthenticated_r, logout_r } from "../../../redux/actions";
-import { Input, Modal, Form, message, Badge } from "antd";
+import { 
+  login_r, 
+  isAuthenticated_r, 
+  logout_r,
+  switchLanguage } from "../../../redux/actions";
+import { Input, Modal, Form, message, Badge,Select} from "antd";
 import router from "next/router";
 import Link from "next/link";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import { languageData } from "../../../../config";
 import {
   UserOutlined,
   ShoppingCartOutlined,
@@ -18,9 +23,10 @@ import { API_URL, IMG_URL } from "../../../../config";
 import axios from "axios";
 import { removeCookies, setCookies } from "cookies-next";
 
+
 const Default = () => {
   const [form] = Form.useForm();
-  const { settings } = useSelector(({ settings }) => settings);
+  const { locale, settings } = useSelector(({ settings }) => settings);
   const { basket } = useSelector((state) => state.basket);
   const { isAuthenticated } = useSelector(({ login }) => login);
   const [openModalLogin, seTopenModalLogin] = useState(false);
@@ -93,7 +99,7 @@ const Default = () => {
           }}
         />
       </div>
-      <div className="">
+      <div className="flex">
         {stateisAuthenticated ? (
           <>
             <Link href="/profile">
@@ -158,6 +164,27 @@ const Default = () => {
             <span className="hidden md:inline "> Basket</span>
           </a>
         </Link>
+        <Select
+        showSearch
+        className="float-right w-22"
+        defaultValue={JSON.stringify(locale)}
+        bordered={false}
+        filterOption={(input, option) =>
+          option.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
+        onChange={(newValue) => {
+          dispatch(switchLanguage(JSON.parse(newValue)));
+        }}
+      >
+        {languageData.map((language) => (
+          <Select.Option
+            key={JSON.stringify(language)}
+            value={JSON.stringify(language)}
+          >
+            {String(language.name)}
+          </Select.Option>
+        ))}
+      </Select>
       </div>
 
       <Modal
@@ -184,6 +211,7 @@ const Default = () => {
       >
         <RegisterForm onSubmitSignup={onSubmitSignup} />
       </Modal>
+      
     </div>
   );
 };
