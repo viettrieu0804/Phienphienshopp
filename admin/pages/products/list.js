@@ -37,11 +37,33 @@ const Default = ({ getData = [] }) => {
   };
 
   const columns = [
+    // {
+    //   title: intl.messages["app.pages.common.image"],
+    //   dataIndex: "image",
+    //   key: "image",
+    //   render: (text, record) => (
+    //     <>
+    //       <Image src={IMG_URL + record.image} height={80} />
+    //     </>
+    //   ),
+    // },
     {
       title: intl.messages["app.pages.common.title"],
       dataIndex: "title",
       key: "title",
       render: (text) => <span className="link">{text}</span>,
+    },
+    {
+      title: intl.messages["app.pages.common.variants"],
+      dataIndex: "variants",
+      key: "variants",
+      render: (text, record) => {
+        return record.type ? (
+          getVariantPrice(record.variant_products)
+        ) : (
+          <Price data={record.price} />
+        );
+      },
     },
 
     {
@@ -127,6 +149,7 @@ const Default = ({ getData = [] }) => {
         }
       })
       .catch((err) => console.log(err));
+      console.log(data);
   };
 
   useEffect(() => {

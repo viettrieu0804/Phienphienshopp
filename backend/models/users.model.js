@@ -129,7 +129,6 @@ const UsersSchema = new mongoose.Schema(
         },
         country_id: {
           type: String,
-          default: "Turkey",
         },
         state_id: {
           type: String,

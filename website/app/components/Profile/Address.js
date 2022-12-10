@@ -18,7 +18,7 @@ const Defaut = () => {
   const [address, seTaddress] = useState([]);
   const [newAddress, seTnewAddress] = useState({ open: false, id: null });
   const [city, seTcity] = useState([]);
-  const [country, seTcountry] = useState([]);
+  // const [country, seTcountry] = useState([]);
   const [selectedO, seTselectedO] = useState({});
   const [cityOption, seTcityOption] = useState([]);
   const [countryOption, seTcountryOption] = useState([]);
@@ -40,37 +40,8 @@ const Defaut = () => {
   }
   useEffect(() => {
     getDataFc();
-    getCountry();
-    getCity();
   }, [user]);
 
-  const getCity = () => {
-    axios.get(`${API_URL}/turkey`).then((getData) => {
-      const dataManipulate = [];
-      for (const i in getData.data) {
-        dataManipulate.push({
-          label: getData.data[i].Il,
-          value: getData.data[i].Il,
-        });
-      }
-      seTcityOption(dataManipulate);
-      seTcity(getData.data);
-    });
-  };
-
-  const getCountry = () => {
-    axios.get(`${API_URL}/country`).then((getData) => {
-      const dataManipulate = [];
-      for (const i in getData.data) {
-        dataManipulate.push({
-          label: getData.data[i].name,
-          value: getData.data[i].name,
-        });
-      }
-      seTcountryOption(dataManipulate);
-      seTcountry(getData.data);
-    });
-  };
 
   const getAddress = () => {
     if (isAuthenticated) {
@@ -192,34 +163,12 @@ const Defaut = () => {
             label="Country"
             fieldKey="country_id"
           >
-            <Select
-              showSearch
-              options={countryOption}
-              autoComplete="none"
-              placeholder="Search to Country"
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
-              onChange={(selected) => {
-                if (selected == "Turkey") {
-                  getCity();
-                } else {
-                  const citydata = country.filter((x) => x.name === selected);
-                  const dataManipulate = [];
-
-                  for (const i in citydata[0].states) {
-                    dataManipulate.push({
-                      label: citydata[0].states[i].name,
-                      value: citydata[0].states[i].name,
-                    });
-                  }
-
-                  seTcityOption(dataManipulate);
-                }
-                seTselectedO({ ...selectedO, selectedCountry: selected });
-              }}
-            />
+            <Input
+                           placeholder={
+                              intl.messages["app.pages.customers.addressDistrict"]
+                           }
+                           autoComplete="none"
+                        />
           </Form.Item>
 
           <Form.Item
@@ -229,30 +178,10 @@ const Defaut = () => {
             label="City"
             rules={[{ required: true, message: "Missing Area" }]}
           >
-            <Select
-              showSearch
-              autoComplete="none"
-              options={cityOption}
-              placeholder={intl.messages["app.pages.customers.addressCity"]}
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
-              onChange={(selected) => {
-                if (selectedO.selectedCountry == "Turkey") {
-                  const ilce = city.filter((x) => x.Il === selected);
-                  const dataManipulate = [];
-                  for (const i in ilce[0].Ilce) {
-                    dataManipulate.push({
-                      label: ilce[0].Ilce[i].Ilce,
-                      value: ilce[0].Ilce[i].Ilce,
-                    });
-                  }
-                  seTselectedO({ ...selectedO, selectedCity: selected });
-                  seTilceOption({ option: dataManipulate, data: ilce[0].Ilce });
-                }
-              }}
-            />
+              <Input
+                placeholder={intl.messages["app.pages.customers.addressTown"]}
+                autocomplete="chrome-off"
+              />
           </Form.Item>
 
           <Form.Item
@@ -262,38 +191,10 @@ const Defaut = () => {
             fieldKey="town_id"
             rules={[{ required: true, message: "Missing Area" }]}
           >
-            {selectedO.selectedCountry == "Turkey" ? (
-              <Select
-                showSearch
-                autoComplete="none"
-                options={ilceOption.option}
-                name="town_id"
-                placeholder={intl.messages["app.pages.customers.addressTown"]}
-                optionFilterProp="children"
-                filterOption={(input, option) =>
-                  option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                }
-                onChange={(selected) => {
-                  const data = ilceOption.data.filter(
-                    (x) => x.Ilce === selected
-                  );
-                  const dataManipulate = [];
-                  for (const i in data[0].Semt) {
-                    dataManipulate.push({
-                      label: data[0].Semt[i].Semt,
-                      value: data[0].Semt[i].Semt,
-                    });
-                  }
-                  seTselectedO({ ...selectedO, selectedIlce: selected });
-                  seTsemtOption({ option: dataManipulate, data: data[0].Semt });
-                }}
-              />
-            ) : (
-              <Input
+             <Input
                 placeholder={intl.messages["app.pages.customers.addressTown"]}
                 autocomplete="chrome-off"
               />
-            )}
           </Form.Item>
 
           <Form.Item
@@ -303,45 +204,12 @@ const Defaut = () => {
             fieldKey="district_id"
             rules={[{ required: true, message: "Missing Area" }]}
           >
-            {selectedO.selectedCountry == "Turkey" ? (
-              <Select
-                showSearch
-                autoComplete="none"
-                options={semtOption.option}
-                placeholder={
-                  intl.messages["app.pages.customers.addressDistrict"]
-                }
-                name="district_id"
-                optionFilterProp="children"
-                filterOption={(input, option) =>
-                  option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                }
-                onChange={(selected) => {
-                  const data = semtOption.data.filter(
-                    (x) => x.Semt === selected
-                  );
-                  const dataManipulate = [];
-                  for (const i in data[0].Mahalle) {
-                    dataManipulate.push({
-                      label: data[0].Mahalle[i].Mahalle,
-                      value: data[0].Mahalle[i].Mahalle,
-                    });
-                  }
-                  seTselectedO({ ...selectedO, selectedSemt: selected });
-                  seTmahalleOption({
-                    option: dataManipulate,
-                    data: data[0].Mahalle,
-                  });
-                }}
-              />
-            ) : (
-              <Input
+            <Input
                 placeholder={
                   intl.messages["app.pages.customers.addressDistrict"]
                 }
                 autocomplete="chrome-off"
               />
-            )}
           </Form.Item>
 
           <Form.Item
@@ -351,31 +219,12 @@ const Defaut = () => {
             fieldKey="village_id"
             rules={[{ required: true, message: "Missing Area" }]}
           >
-            {selectedO.selectedCountry == "Turkey" ? (
-              <Select
-                showSearch
-                autoComplete="none"
-                options={mahalleOption.option}
-                placeholder={
-                  intl.messages["app.pages.customers.addressNeighbour"]
-                }
-                name="village_id"
-                optionFilterProp="children"
-                filterOption={(input, option) =>
-                  option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                }
-                onChange={(selected) => {
-                  seTselectedO({ ...selectedO, selectedMahalle: selected });
-                }}
-              />
-            ) : (
-              <Input
+            <Input
                 placeholder={
                   intl.messages["app.pages.customers.addressNeighbour"]
                 }
                 autocomplete="chrome-off"
               />
-            )}
           </Form.Item>
           <Form.Item
             className="float-left w-full  mx-0 px-0"
