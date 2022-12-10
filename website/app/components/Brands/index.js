@@ -54,8 +54,6 @@ const Default = () => {
                   <a>
                     <img
                       src={`${IMG_URL + val.image}`}
-                      width="70"
-                      height="70"
                       priority
                       alt={val.title}
                       className="mx-auto"
