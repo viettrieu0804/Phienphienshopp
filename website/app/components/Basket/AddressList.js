@@ -8,6 +8,7 @@ import { getBasket_r, updateBasket_r } from "../../../redux/actions";
 import { useIntl } from "react-intl";
 import AuthService from "../../../util/services/authservice";
 
+
 const Default = () => {
    const intl = useIntl();
 
@@ -23,10 +24,11 @@ const Default = () => {
    const [newAddress, seTnewAddress] = useState({ open: false, id: null });
 
 
+console.log("newAddress",newAddress);
+
    const [form] = Form.useForm();
 
    const dispatch = useDispatch();
-
    const updateAddress = async (newAddresArr) => {
       if (isAuthenticated) {
          await axios
@@ -272,8 +274,10 @@ const Default = () => {
             </div>
 
             <Drawer
+               // style={{"style="}}
                title="Address"
                placement="left"
+               closable={false}
                onClose={() => {
                   seTnewAddress({ ...newAddress, open: !newAddress.open });
                }}
@@ -320,7 +324,7 @@ const Default = () => {
                   >
                      <Input
                            placeholder={
-                              intl.messages["app.pages.customers.addressNeighbour"]
+                              intl.messages["app.pages.customers.addressCountry"]
                            }
                         />
                   </Form.Item>
@@ -333,7 +337,7 @@ const Default = () => {
                   >
                        <Input
                            placeholder={
-                              intl.messages["app.pages.customers.addressNeighbour"]
+                              intl.messages["app.pages.customers.addressCity"]
                            }
                         />
                   </Form.Item>
@@ -357,7 +361,7 @@ const Default = () => {
                      rules={[{ required: true, message: "Missing Area" }]}
                   >
                    <Input
-                           placeholder={intl.messages["app.pages.customers.addressTown"]}
+                           placeholder={intl.messages["app.pages.customers.addressDistrict"]}
                            autoComplete="none"
                         />
                   </Form.Item>
