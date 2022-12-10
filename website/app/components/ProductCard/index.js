@@ -28,7 +28,7 @@ const Default = ({ data = null, className }) => {
 
    return (
       <div className={className} key={data._id}>
-         <div className="  relative cursor-pointer  rounded-lg">
+         <div className="relative cursor-pointer rounded-lg">
             <Link href={"/product/" + data.seo}>
                <div className="w-full">
                   <div className="w-full relative overflow-hidden   ">
@@ -42,7 +42,7 @@ const Default = ({ data = null, className }) => {
                         discount
                      </span>
                      <img
-                        className="w-full h-full bg-center rounded-t-lg group-hover:scale-105 transition-all "
+                        className="w-full h-full bg-center rounded-t-lg group-hover:scale-105 transition-all"
                         src={img}
                         width="220"
                         height="220"
