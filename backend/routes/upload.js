@@ -182,10 +182,14 @@ router.post(
 
     if (rolesControl["productimages/add"]) {
       if (req.file)
+      {
+        var a = req.file.path.replace("../admin/public/", "/");
+        console.log(a);
         return res.json({
           msg: "image successfully uploaded",
           path: req.file.path,
         });
+      }
       res.send("Image upload failed");
     } else {
       res.status(403).json({
