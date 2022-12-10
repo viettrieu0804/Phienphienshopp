@@ -95,7 +95,7 @@ const Default = () => {
           }}
         />
       </div>
-      <div className="">
+      <div className="flex">
         {stateisAuthenticated ? (
           <>
             <Link href="/profile">
@@ -160,7 +160,7 @@ const Default = () => {
             <span className="hidden md:inline "> Basket</span>
           </a>
         </Link>
-        <Select
+        {/* <Select
         showSearch
         className="float-right w-22"
         defaultValue={JSON.stringify(locale)}
@@ -180,7 +180,7 @@ const Default = () => {
             {String(language.name)}
           </Select.Option>
         ))}
-      </Select>
+      </Select> */}
       </div>
 
       <Modal
