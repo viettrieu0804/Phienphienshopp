@@ -23,9 +23,9 @@ const jsonConfig = {
       icon: "us",
     },
     {
-      languageId: "turkish",
+      languageId: "VietNamese",
       locale: "tr",
-      name: "Türkçe",
+      name: "VietNamese",
       icon: "tr",
     },
   ],
