@@ -10,8 +10,8 @@ const jsonConfig = {
     // tls: { rejectUnauthorized: true },
     service: "Gmail",
     auth: {
-      user: "noreplyexamplemail@gmail.com",
-      pass: "noraplymailpassword",
+      user: "trieunvvps17073@fpt.edu.vn",
+      pass: "nyxbyzmwitmabnan",
     },
   },
 
