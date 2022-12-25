@@ -6,8 +6,150 @@ import Price from "../Price";
 import { Button } from "antd";
 import { IMG_URL } from "../../../../config";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import {
+  ShoppingCartOutlined,
+  LoadingOutlined,
+  CreditCardOutlined,
+} from "@ant-design/icons";
 
-const Default = ({ data = null, className }) => {
+const Default = ({
+  data = null,
+  className,
+  form,
+  disabledVariant = true,
+  seTloadingButton,
+  loadingButton,
+}) => {
+  const addBasket = (res) => {
+    if (basket.length < 1) {
+      const post = {
+        created_user: {
+          name: user.name,
+          id: user.id,
+        },
+        customer_id: user.id,
+        products: [
+          {
+            product_id: state._id,
+            seo: state.seo,
+            selectedVariants: res,
+            qty: 1,
+          },
+        ],
+        total_price: priceAdd.price,
+        discount_price: priceAdd.before_price,
+      };
+      if (isAuthenticated) {
+        axios
+          .post(`${API_URL}/basket/add`, post)
+          .then(() => {
+            getBasket(user.id);
+            seTloadingButton(true);
+            form.resetFields();
+            message.success({ content: "Product Added!", duration: 3 });
+          })
+          .catch((err) => {
+            message.error({
+              content: "Some Error, Please Try Again " + err,
+              duration: 3,
+            });
+          });
+      } else {
+        seTloadingButton(true);
+        form.resetFields();
+        message.success({ content: "Product Added!", duration: 3 });
+        dispatch(updateBasket_r([post]));
+      }
+    } else {
+      const productsDataArray = basket[0].products;
+      const productsData = [];
+
+      if (state.type) {
+        const variantControl = productsDataArray.find(
+          (x) =>
+            (x.product_id._id == state._id || x.product_id == state._id) &&
+            JSON.stringify(x.selectedVariants) == JSON.stringify(res)
+        );
+        const variantControlNot = productsDataArray.filter(
+          (x) => JSON.stringify(x.selectedVariants) != JSON.stringify(res)
+        );
+        if (variantControl == undefined) {
+          productsData.push(...productsDataArray, {
+            product_id: state._id,
+            selectedVariants: res,
+            seo: state.seo,
+            qty: 1,
+          });
+        } else {
+          productsData.push(...variantControlNot, {
+            product_id: state._id,
+            selectedVariants: res,
+            seo: state.seo,
+            qty: variantControl.qty + 1,
+          });
+        }
+      } else {
+        const variantControlId = productsDataArray.find(
+          (x) => x.product_id._id == state._id || x.product_id == state._id
+        );
+        const variantControlIdNot = productsDataArray.filter(
+          (x) =>
+            JSON.stringify(x.selectedVariants) != JSON.stringify(res) &&
+            x.product_id != state._id
+        );
+
+        if (variantControlId == undefined) {
+          productsData.push(...productsDataArray, {
+            product_id: state._id,
+            selectedVariants: undefined,
+            seo: state.seo,
+            qty: 1,
+          });
+        } else {
+          productsData.push(...variantControlIdNot, {
+            product_id: state._id,
+            selectedVariants: undefined,
+            seo: state.seo,
+            qty: variantControlId.qty + 1,
+          });
+        }
+      }
+      const post = {
+        created_user: {
+          name: user.name,
+          id: user.id,
+        },
+        customer_id: user.id,
+        products: productsData.sort(
+          (a, b) =>
+            (a.seo + JSON.stringify(a.selectedVariants)).length -
+            (b.seo + JSON.stringify(b.selectedVariants)).length
+        ),
+      };
+      if (isAuthenticated) {
+        axios
+          .post(`${API_URL}/basket/${basket[0]._id}`, post)
+          .then(() => {
+            getBasket(user.id);
+            seTloadingButton(true);
+            form.resetFields();
+            message.success({ content: "Product Added!", duration: 3 });
+          })
+          .catch((err) => {
+            message.error({
+              content: "Some Error, Please Try Again",
+              duration: 3,
+            });
+            console.log(err);
+          });
+      } else {
+        seTloadingButton(true);
+        form.resetFields();
+        message.success({ content: "Product Added!", duration: 3 });
+        dispatch(updateBasket_r([post]));
+      }
+    }
+  };
   const { settings } = useSelector(({ settings }) => settings);
   const getVariantPrice = (data) => {
     if (data.length > 0) {
@@ -93,6 +235,23 @@ const Default = ({ data = null, className }) => {
               </div>
               <Button className="!bg-brand-color  rounded-r rounded-t-none !rounded-b-none !rounded-l   absolute bottom-0 right-0 b  group-hover:text-white group-hover:shadow-lg text-white">
                 Details
+              </Button>
+              <Button
+                type="primary"
+                className="!bg-brand-color  !rounded-r rounded-t-none !rounded-b-none   absolute bottom-0 left-40 b  group-hover:text-green-400 group-hover:shadow-lg text-white"
+                disabled={!disabledVariant}
+                onClick={() => {
+                  form
+                    .then((res) => {
+                      seTloadingButton(false);
+                      if (loadingButton) {
+                        addBasket(res);
+                      }
+                    })
+                    .catch((err) => console.log("err", err));
+                }}
+              >
+                
               </Button>
             </div>
           </div>

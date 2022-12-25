@@ -28,10 +28,10 @@ const Default = ({ data = null, className }) => {
 
    return (
       <div className={className} key={data._id}>
-         <div className="  relative cursor-pointer  rounded-lg">
+         <div className="relative cursor-pointer rounded-lg">
             <Link href={"/product/" + data.seo}>
                <div className="w-full">
-                  <div className="w-full relative overflow-hidden   ">
+                  <div className="w-full relative overflow-hidden pb-[150%]">
                      <span
                         className={`${func.getDiscount(data) ? "visible" : "invisible"
                         } absolute z-10 top-0 mt-2 text-xs float-right py-1 px-2  bg-red-600 text-white`}
@@ -42,10 +42,10 @@ const Default = ({ data = null, className }) => {
                         discount
                      </span>
                      <img
-                        className="w-full h-full bg-center rounded-t-lg group-hover:scale-105 transition-all "
+                        className="bg-center rounded-t-lg group-hover:scale-105 transition-all absolute w-[100%] h-[100%] left-0 top-0 object-cover"
                         src={img}
-                        width="220"
-                        height="220"
+                        width={220}
+                        height={220}
                         alt={data.title}
                      />
                      <Button className="w-full   font-bold pb-5   group-hover:!text-black group-hover:!bg-white  border-0 shadow-none absolute transition-all  overflow-hidden -mt-5 z-0 group-hover:-mt-7 rounded-none group-hover:visible invisible">

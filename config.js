@@ -1,7 +1,7 @@
 const jsonConfig = {
-  API_URL: "https://backend.nextly.shop",
-  WEBSITE_URL: "https://nextly.shop",
-  IMG_URL: "https://backend.nextly.shop",
+  API_URL: "https://backend.phienphien.shop",
+  WEBSITE_URL: "https://phienphien.shop",
+  IMG_URL: "https://backend.phienphien.shop",
 
   maillerConfig: {
     // host: 'smtp.gmail.com',
@@ -10,8 +10,8 @@ const jsonConfig = {
     // tls: { rejectUnauthorized: true },
     service: "Gmail",
     auth: {
-      user: "noreplyexamplemail@gmail.com",
-      pass: "noraplymailpassword",
+      user: "trieunvvps17073@fpt.edu.vn",
+      pass: "nyxbyzmwitmabnan",
     },
   },
 

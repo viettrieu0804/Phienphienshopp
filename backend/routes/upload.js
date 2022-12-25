@@ -69,7 +69,7 @@ const uploadImageCustomer = async (req, res, next) => {
   try {
     if (req.body[0]) {
       // to declare some path to store your converted image
-      const path = "../admin/public/images/uploads/customers/" + Date.now() + ".png";
+      const path = "/images/uploads/cargoes/" + req.file.filename + Date.now() + ".png";
 
       const imgdata = req.body[0].thumbUrl;
       if (!imgdata) {
@@ -300,7 +300,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path,
+          path: "/images/uploads/orderstatus/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {
@@ -368,7 +368,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path,
+          path: "/images/uploads/paymentmethods/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {
@@ -436,7 +436,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path,
+          path: "/images/uploads/brands/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {
@@ -504,7 +504,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path,
+          path: "/images/uploads/homeslider/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {
@@ -572,7 +572,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: req.file.path,
+          path: "/images/uploads/logo/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {

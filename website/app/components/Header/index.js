@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import AuthService from "../../../util/services/authservice";
 import { useDispatch, useSelector } from "react-redux";
-import { login_r, isAuthenticated_r, logout_r,switchLanguage } from "../../../redux/actions";
+import { 
+  login_r, 
+  isAuthenticated_r, 
+  logout_r,
+  switchLanguage } from "../../../redux/actions";
 import { Input, Modal, Form, message, Badge,Select} from "antd";
 import router from "next/router";
 import Link from "next/link";
@@ -95,7 +99,7 @@ const Default = () => {
           }}
         />
       </div>
-      <div className="">
+      <div className="flex">
         {stateisAuthenticated ? (
           <>
             <Link href="/profile">
