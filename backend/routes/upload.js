@@ -436,7 +436,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: "/images/uploads/cargoes/" + req.file.filename,
+          path: "/images/uploads/brands/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {
@@ -504,7 +504,7 @@ router.post(
       if (req.file)
         return res.json({
           msg: "image successfully uploaded",
-          path: "/images/uploads/cargoes/" + req.file.filename,
+          path: "/images/uploads/homeslider/" + req.file.filename,
         });
       res.send("Image upload failed");
     } else {

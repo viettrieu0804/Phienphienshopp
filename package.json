@@ -5,10 +5,10 @@
   "main": "ecosystem.config.js",
   "scripts": {
     "allnpmi": "cd website && npm i -f   && cd ../admin && npm i -f   && cd ../backend && npm i -f   ",
-    "allnpmdev": "cd website && npm run dev   & cd admin && npm run dev   & cd backend && nodemon server.js  ",
-    "allnpmbuild": "cd website && npm  run build   && cd ../admin && npm run build  && cd ..",
-    "start": " pm2 start ecosystem.config.js ",
-    "ngu": "cd website && npm run dev & cd admin && npm start & cd backend && node server.js"
+    "allnpmdev": "cd website && npm run dev & cd admin && npm run dev & cd backend && nodemon server.js  ",
+    "allnpmbuild": "cd website && npm run build && cd ../admin && npm run build && cd ..",
+    "ngu": "cd website && npm run dev & cd admin && npm start & cd backend && node server.js",
+    "start": " pm2 start ecosystem.config.js "
   },
   "repository": {
     "type": "git",

@@ -40,7 +40,7 @@ const Default = ({ state = [] }) => {
             delay: 15000,
             disableOnInteraction: false,
           }}
-          className="w-full h-screen"
+          className="mySwiper h-[500px] lg:h-screen"
         >
           {state.map((val) => (
             <SwiperSlide key={val._id}>
@@ -49,11 +49,10 @@ const Default = ({ state = [] }) => {
                   <a>
                     <img
                       src={`${IMG_URL + val.image}`}
-                      height="500"
                       width="1680"
                       style={{ width: "100%" }}
                       alt={val.title + "."}
-                      className="absolute -z-10 w-full h-full "
+                      className="absolute -z-10 w-full h-full object-cover top-0"
                     />
                   </a>
                 </Link>

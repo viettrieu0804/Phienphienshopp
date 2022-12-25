@@ -85,7 +85,7 @@ const Default = ({ getCategories = [] }) => {
       .then((res) => {
         if (res.data.variant == "error") {
           message.error(
-            intl.messages["app.pages.category.notAdded"] + res.data.messagge
+            intl.messages["app.pages.category.notAdded"] + res.data.messages
           );
         } else {
           message.success(intl.messages["app.pages.category.added"]);
