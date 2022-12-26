@@ -232,7 +232,7 @@ const Default = () => {
                   render: (text, record) => {
                      const errorArray = [];
                      record.error.map((x) => {
-                        errorArray.push(<div className="text-xs "> {x} </div>);
+                        errorArray.push(<div className="text-xs absolute mt-16"> {x} </div>);
                      });
 
                      const variants = [];
@@ -248,10 +248,11 @@ const Default = () => {
                      }
 
                      return (
-                        <span className="link">
+                        <span className="link ">
                            <div className="mb-5 w-full">
                               <span className="float-right text-right sm:hidden ">
                                  <Popconfirm
+                                 className=""
                                     placement="left"
                                     title="Are You Sure?"
                                     onConfirm={() => {
@@ -397,11 +398,12 @@ const Default = () => {
                   title: "Delete",
                   dataIndex: "action",
                   key: "action",
-                  className: "hidden sm:table-cell ",
+                  className: "hidden sm:table-cell",
                   render: (text, record) => (
                      <Popconfirm
-                        placement="left"
-                        title="Are You Sure?"
+                     className="ml-32"
+                        placement="right"
+                        title="Are You Sure?2"
                         onConfirm={() => {
                            deleteProduct(record);
                         }}

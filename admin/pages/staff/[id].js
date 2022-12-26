@@ -291,6 +291,8 @@ const Default = () => {
             placement="left"
             title={intl.messages["app.pages.common.sureToDelete"]}
             onConfirm={() => deleteData()}
+            okText={intl.messages["app.pages.common.yes"]}
+            cancelText={intl.messages["app.pages.common.no"]}
           >
             <a>
               <DeleteOutlined

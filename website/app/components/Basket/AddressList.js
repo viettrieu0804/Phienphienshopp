@@ -257,23 +257,10 @@ console.log("newAddress",newAddress);
                <div className="text-lg font-semibold w-full   sm:mt-10 mt-16">
             Billing Address{" "}
                </div>
-               <div className="w-full">
-                  {address &&
-              address.map((x, i) => (
-                 <AddressSelect
-                    key={i}
-                    Data={x}
-                    seTnewAddress={seTnewAddress}
-                    seTfields={seTfields}
-                    newAddress={newAddress}
-                    selectedBillingAddress={selectedBillingAddress}
-                    onChanheBillingAddress={onChanheBillingAddress}
-                 />
-              ))}
-               </div>
+              
             </div>
 
-            <Drawer
+            {/* <Drawer
                // style={{"style="}}
                title="Address"
                placement="left"
@@ -282,120 +269,128 @@ console.log("newAddress",newAddress);
                   seTnewAddress({ ...newAddress, open: !newAddress.open });
                }}
                visible={newAddress.open}
-            >
-               <Form
-                  form={form}
-                  onFinishFailed={onFinishFailedAddress}
-                  onFinish={onSubmitAddress}
-                  fields={fields}
-                  scrollToFirstError
-               >
-                  <Form.Item
-                     className="float-left  w-full mx-0 px-0"
-                     name="name"
-                     fieldKey="name"
-                     rules={[{ required: true, message: "Missing Area" }]}
-                  >
-                     <Input
-                        placeholder={intl.messages["app.pages.customers.addressName"]}
-                        autocomplete="chrome-off"
-                     />
-                  </Form.Item>
+            > */}
+            <Form
+          onFinish={onSubmitAddress}
+          fields={fields}
+          scrollToFirstError
+         className="w-[800px] ml-20"
+        >
+          <Form.Item
+            className="float-left  w-full mx-0 px-0"
+            name="name"
+            label={intl.messages["app.pages.customers.addressName"]}
+            fieldKey="name"
+            rules={[{ required: true, message: "Missing Area" }]}
+          >
+            <Input autocomplete="chrome-off" />
+          </Form.Item>
 
-                  <Form.Item
-                     name="type"
-                     className="float-left w-full mx-0 px-0"
-                     fieldKey="type"
-                  >
-                     <Select
-                        defaultValue={true}
-                        options={[
-                           { label: "Billing Address", value: true },
-                           { label: "Shipping Address", value: false },
-                        ]}
-                        placeholder="Select Address Type"
-                     />
-                  </Form.Item>
+          <Form.Item
+            name="type"
+            className="float-left  w-full  mx-0 px-0"
+            label="Type"
+            fieldKey="type"
+          >
+            <Select
+              defaultValue={true}
+              options={[
+                { label: "Billing Address", value: true },
+                { label: "Shipping Address", value: false },
+              ]}
+              placeholder="Select Address Type"
+              autoComplete="none"
+            />
+          </Form.Item>
 
-                  <Form.Item
-                     name="country_id"
-                     className="float-left w-full mx-0 px-0"
-                     fieldKey="country_id"
-                  >
-                     <Input
+          <Form.Item
+            name="country_id"
+            className="float-left  w-full  mx-0 px-0"
+            label="Country"
+            fieldKey="country_id"
+          >
+            <Input
                            placeholder={
-                              intl.messages["app.pages.customers.addressCountry"]
+                              intl.messages["app.pages.customers.addressDistrict"]
                            }
-                        />
-                  </Form.Item>
-
-                  <Form.Item
-                     className="float-left w-full  mx-0 px-0"
-                     name="city_id"
-                     fieldKey="city_id"
-                     rules={[{ required: true, message: "Missing Area" }]}
-                  >
-                       <Input
-                           placeholder={
-                              intl.messages["app.pages.customers.addressCity"]
-                           }
-                        />
-                  </Form.Item>
-
-                  <Form.Item
-                     className="float-left w-full  mx-0 px-0"
-                     name="town_id"
-                     fieldKey="town_id"
-                     rules={[{ required: true, message: "Missing Area" }]}
-                  >
-                      <Input
-                           placeholder={intl.messages["app.pages.customers.addressTown"]}
                            autoComplete="none"
                         />
-                  </Form.Item>
+          </Form.Item>
 
-                  <Form.Item
-                     className="float-left w-full  mx-0 px-0"
-                     name="district_id"
-                     fieldKey="district_id"
-                     rules={[{ required: true, message: "Missing Area" }]}
-                  >
-                   <Input
-                           placeholder={intl.messages["app.pages.customers.addressDistrict"]}
-                           autoComplete="none"
-                        />
-                  </Form.Item>
+          <Form.Item
+            className="float-left w-full  mx-0 px-0"
+            name="city_id"
+            fieldKey="city_id"
+            label="City"
+            rules={[{ required: true, message: "Missing Area" }]}
+          >
+              <Input
+                placeholder={intl.messages["app.pages.customers.addressTown"]}
+                autocomplete="chrome-off"
+              />
+          </Form.Item>
 
-                  <Form.Item
-                     name="village_id"
-                     className="float-left w-full mx-0 px-0"
-                     fieldKey="village_id"
-                     autoComplete="none"
-                     rules={[{ required: true, message: "Missing Area" }]}
-                  >
-                    <Input
-                           placeholder={
-                              intl.messages["app.pages.customers.addressNeighbour"]
-                           }
-                        />
-                  </Form.Item>
-                  <Form.Item
-                     className="float-left w-full  mx-0 px-0"
-                     name="address"
-                     fieldKey="address"
-                     rules={[{ required: true, message: "Missing Area" }]}
-                     autoComplete="none"
-                  >
-                     <Input.TextArea
-                        rows={3}
-                        placeholder={intl.messages["app.pages.customers.addressFull"]}
-                     />
-                  </Form.Item>
-                  <Button htmlType="submit" className="w-full p-3 h-auto">
-              Save
-                  </Button>
-               </Form>
-            </Drawer>
+          <Form.Item
+            className="float-left w-full  mx-0 px-0"
+            name="town_id"
+            label="Town"
+            fieldKey="town_id"
+            rules={[{ required: true, message: "Missing Area" }]}
+          >
+             <Input
+                placeholder={intl.messages["app.pages.customers.addressTown"]}
+                autocomplete="chrome-off"
+              />
+          </Form.Item>
+
+          <Form.Item
+            className="float-left w-full  mx-0 px-0"
+            name="district_id"
+            label="District"
+            fieldKey="district_id"
+            rules={[{ required: true, message: "Missing Area" }]}
+          >
+            <Input
+                placeholder={
+                  intl.messages["app.pages.customers.addressDistrict"]
+                }
+                autocomplete="chrome-off"
+              />
+          </Form.Item>
+
+          <Form.Item
+            name="village_id"
+            className="float-left w-full  mx-0 px-0"
+            label="Village"
+            fieldKey="village_id"
+            rules={[{ required: true, message: "Missing Area" }]}
+          >
+            <Input
+                placeholder={
+                  intl.messages["app.pages.customers.addressNeighbour"]
+                }
+                autocomplete="chrome-off"
+              />
+          </Form.Item>
+          <Form.Item
+            className="float-left w-full  mx-0 px-0"
+            name="address"
+            label="Address"
+            fieldKey="address"
+            rules={[{ required: true, message: "Missing Area" }]}
+          >
+            <Input.TextArea
+              rows={3}
+              placeholder={intl.messages["app.pages.customers.addressFull"]}
+              autocomplete="chrome-off"
+            />
+          </Form.Item>
+          <Button htmlType="submit" className="w-full p-3 h-auto">
+            Save
+          </Button>
+        </Form>
+               
+            {/* </Drawer> */}
          </div>
       </>
    );
