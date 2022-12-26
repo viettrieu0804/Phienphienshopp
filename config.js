@@ -3,6 +3,9 @@ const jsonConfig = {
   WEBSITE_URL: "https://phienphien.shop",
   IMG_URL: "https://backend.phienphien.shop",
 
+  TEST_URL: "http://localhost:3000",
+
+
   maillerConfig: {
     // host: 'smtp.gmail.com',
     // port: 465,
@@ -10,8 +13,8 @@ const jsonConfig = {
     // tls: { rejectUnauthorized: true },
     service: "Gmail",
     auth: {
-      user: "trieunvvps17073@fpt.edu.vn",
-      pass: "nyxbyzmwitmabnan",
+      user: "phienphienshop@gmail.com",
+      pass: "mgoqdulvoztfcfvy",
     },
   },
 
