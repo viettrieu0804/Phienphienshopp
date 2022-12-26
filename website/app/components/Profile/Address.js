@@ -105,25 +105,16 @@ const Defaut = () => {
       >
         New Address
       </Button>
-      {address &&
-        address.map((x, i) => (
-          <AddressSelect
-            key={i}
-            Data={x}
-            seTnewAddress={seTnewAddress}
-            seTfields={seTfields}
-            newAddress={newAddress}
-          />
-        ))}
+      
 
-      <Drawer
+      {/* <Drawer
         title="Address"
         placement="right"
         onClose={() => {
           seTnewAddress({ ...newAddress, open: !newAddress.open });
         }}
         visible={newAddress.open}
-      >
+      > */}
         <Form
           onFinish={onSubmitAddress}
           fields={fields}
@@ -243,7 +234,17 @@ const Defaut = () => {
             Save
           </Button>
         </Form>
-      </Drawer>
+        {address &&
+        address.map((x, i) => (
+          <AddressSelect
+            key={i}
+            Data={x}
+            seTnewAddress={seTnewAddress}
+            seTfields={seTfields}
+            newAddress={newAddress}
+          />
+        ))}
+      {/* </Drawer> */}
     </div>
   );
 };

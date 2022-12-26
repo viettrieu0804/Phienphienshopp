@@ -795,6 +795,8 @@ const Default = ({ getData = [] }) => {
                   <Popconfirm
                     placement="left"
                     title={intl.messages["app.pages.common.sureToDelete"]}
+                    okText={intl.messages["app.pages.common.yes"]}
+                  cancelText={intl.messages["app.pages.common.no"]}
                     onConfirm={() => {
                       let filteredArray = state.products.filter(
                         (item) => item !== record
