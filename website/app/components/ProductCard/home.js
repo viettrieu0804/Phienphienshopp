@@ -251,13 +251,7 @@ const Default = ({
                     .catch((err) => console.log("err", err));
                 }}
               >
-                {" "}
-                Add To Basket
-                {loadingButton ? (
-                  <ShoppingCartOutlined />
-                ) : (
-                  <LoadingOutlined className="animate-spin h-5 w-5 mr-3  " />
-                )}
+                
               </Button>
             </div>
           </div>

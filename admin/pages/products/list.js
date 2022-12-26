@@ -53,18 +53,6 @@ const Default = ({ getData = [] }) => {
       key: "title",
       render: (text) => <span className="link">{text}</span>,
     },
-    {
-      title: intl.messages["app.pages.common.variants"],
-      dataIndex: "variants",
-      key: "variants",
-      render: (text, record) => {
-        return record.type ? (
-          getVariantPrice(record.variant_products)
-        ) : (
-          <Price data={record.price} />
-        );
-      },
-    },
 
     {
       title: intl.messages["app.pages.common.price"],
@@ -102,6 +90,13 @@ const Default = ({ getData = [] }) => {
         </>
       ),
     },
+    {
+      title: intl.messages["app.pages.common.qty"],
+      dataIndex: "qty",
+      key: "qty",
+      render: (text)=> <span>{text}</span>
+    },
+
     {
       title: intl.messages["app.pages.common.action"],
       key: "_id",

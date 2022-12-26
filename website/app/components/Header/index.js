@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import AuthService from "../../../util/services/authservice";
 import { useDispatch, useSelector } from "react-redux";
-import { login_r, isAuthenticated_r, logout_r,switchLanguage } from "../../../redux/actions";
+import { 
+  login_r, 
+  isAuthenticated_r, 
+  logout_r,
+  switchLanguage } from "../../../redux/actions";
 import { Input, Modal, Form, message, Badge,Select} from "antd";
 import router from "next/router";
 import Link from "next/link";
@@ -160,7 +164,7 @@ const Default = () => {
             <span className="hidden md:inline "> Basket</span>
           </a>
         </Link>
-        {/* <Select
+        <Select
         showSearch
         className="float-right w-22"
         defaultValue={JSON.stringify(locale)}
@@ -180,7 +184,7 @@ const Default = () => {
             {String(language.name)}
           </Select.Option>
         ))}
-      </Select> */}
+      </Select>
       </div>
 
       <Modal
