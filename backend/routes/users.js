@@ -6,7 +6,7 @@ const JWT = require("jsonwebtoken");
 const Users = require("../models/users.model");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
-const { WEBSITE_URL, maillerConfig } = require("../../config");
+const { WEBSITE_URL, TEST_URL , maillerConfig } = require("../../config");
 
 require("dotenv").config();
 
@@ -277,7 +277,7 @@ router.post("/forgotpasswordcustomer", (req, res) => {
         text:
           "You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n" +
           "Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n" +
-          `${WEBSITE_URL}/resetpassword/?token=${token}\n\n` +
+          `${TEST_URL}/resetpassword/?token=${token}\n\n` +
           "If you did not request this, please ignore this email and your password will remain unchanged.\n",
       };
 

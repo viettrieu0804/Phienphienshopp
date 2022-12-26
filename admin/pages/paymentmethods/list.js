@@ -45,6 +45,8 @@ const Default = ({ getData = [] }) => {
                 placement="left"
                 title={intl.messages["app.pages.common.youSure"]}
                 onConfirm={() => activeOrDeactive(record._id, record.isActive)}
+                okText={intl.messages["app.pages.common.yes"]}
+                    cancelText={intl.messages["app.pages.common.no"]}
               >
                 <Tooltip
                   placement="bottomRight"
@@ -89,6 +91,8 @@ const Default = ({ getData = [] }) => {
                   placement="left"
                   title={intl.messages["app.pages.common.sureToDelete"]}
                   onConfirm={() => deleteData(record._id, record.image)}
+                  okText={intl.messages["app.pages.common.yes"]}
+                  cancelText={intl.messages["app.pages.common.no"]}
                 >
                   <a>
                     <DeleteOutlined

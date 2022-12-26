@@ -291,6 +291,8 @@ const Default = () => {
             placement="left"
             title={intl.messages["app.pages.common.sureToDelete"]}
             onConfirm={() => deleteData()}
+            okText={intl.messages["app.pages.common.yes"]}
+            cancelText={intl.messages["app.pages.common.no"]}
           >
             <a>
               <DeleteOutlined
@@ -405,7 +407,7 @@ const Default = () => {
               style={{ width: "100%" }}
             />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             name="image"
             label={"Avatar " + intl.messages["app.pages.common.image"]}
           >
@@ -422,7 +424,7 @@ const Default = () => {
                 {fileList.length < 1 && "+ Upload"}
               </Upload>
             </ImgCrop>
-          </Form.Item>
+          </Form.Item> */}
 
           {user?.role?.superadmin ? (
             <Form.Item

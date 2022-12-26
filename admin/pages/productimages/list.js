@@ -50,7 +50,7 @@ const Default = ({ getData = [] }) => {
       width: 360,
       render: (text, record) => (
         <span className="link ant-dropdown-link">
-          {role["productimages/id"] ? (
+          {/* {role["productimages/id"] ? (
             <Link href={"/productimages/" + record._id}>
               <a>
                 {" "}
@@ -61,7 +61,7 @@ const Default = ({ getData = [] }) => {
             </Link>
           ) : (
             ""
-          )}
+          )} */}
           {role["productimagesdelete"] ? (
             <>
               {record.children ? (
@@ -71,6 +71,8 @@ const Default = ({ getData = [] }) => {
                   placement="left"
                   title={intl.messages["app.pages.common.youSure"]}
                   onConfirm={() => deleteData(record._id, record.image, id)}
+                  okText={intl.messages["app.pages.common.yes"]}
+                    cancelText={intl.messages["app.pages.common.no"]}
                 >
                   <a>
                     <DeleteOutlined
