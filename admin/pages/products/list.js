@@ -90,12 +90,6 @@ const Default = ({ getData = [] }) => {
         </>
       ),
     },
-    {
-      title: intl.messages["app.pages.common.qty"],
-      dataIndex: "qty",
-      key: "qty",
-      render: (text)=> <span>{text}</span>
-    },
 
     {
       title: intl.messages["app.pages.common.action"],

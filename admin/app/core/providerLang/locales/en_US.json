@@ -42,6 +42,8 @@
   "app.pages.common.save": "Save",
   "app.pages.common.youSure": "Are you sure?",
   "app.pages.common.sureToDelete": "Sure to delete?",
+  "app.pages.common.yes":"Ok",
+  "app.pages.common.no":"No",
   "app.pages.common.chageActive": "Change Active",
   "app.pages.common.deleteData": "Delete Data",
   "app.pages.common.selectFile": "Select file",

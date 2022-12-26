@@ -249,7 +249,7 @@ const Default = () => {
 
                      return (
                         <span className="link">
-                           <div className="float-left mb-5 w-full">
+                           <div className="mb-5 w-full">
                               <span className="float-right text-right sm:hidden ">
                                  <Popconfirm
                                     placement="left"

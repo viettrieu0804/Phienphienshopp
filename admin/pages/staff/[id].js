@@ -405,7 +405,7 @@ const Default = () => {
               style={{ width: "100%" }}
             />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             name="image"
             label={"Avatar " + intl.messages["app.pages.common.image"]}
           >
@@ -422,7 +422,7 @@ const Default = () => {
                 {fileList.length < 1 && "+ Upload"}
               </Upload>
             </ImgCrop>
-          </Form.Item>
+          </Form.Item> */}
 
           {user?.role?.superadmin ? (
             <Form.Item
