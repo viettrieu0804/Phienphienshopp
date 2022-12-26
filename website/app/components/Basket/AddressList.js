@@ -8,259 +8,251 @@ import { getBasket_r, updateBasket_r } from "../../../redux/actions";
 import { useIntl } from "react-intl";
 import AuthService from "../../../util/services/authservice";
 
-
 const Default = () => {
-   const intl = useIntl();
+  const intl = useIntl();
 
-   const { basket } = useSelector((state) => state.basket);
-   const { isAuthenticated, user } = useSelector(({ login }) => login);
-   const [fields, seTfields] = useState([]);
+  const { basket } = useSelector((state) => state.basket);
+  const { isAuthenticated, user } = useSelector(({ login }) => login);
+  const [fields, seTfields] = useState([]);
 
-   const [address, seTaddress] = useState([]);
+  const [address, seTaddress] = useState([]);
 
-   const [selectedShippingAddress, seTselectedShippingAddress] = useState(null);
-   const [selectedBillingAddress, seTselectedBillingAddress] = useState(null);
-   const [billingAdressSame, seTbillingAdressSame] = useState(true);
-   const [newAddress, seTnewAddress] = useState({ open: false, id: null });
+  const [selectedShippingAddress, seTselectedShippingAddress] = useState(null);
+  const [selectedBillingAddress, seTselectedBillingAddress] = useState(null);
+  const [billingAdressSame, seTbillingAdressSame] = useState(true);
+  const [newAddress, seTnewAddress] = useState({ open: false, id: null });
 
+  console.log("newAddress", newAddress);
 
-console.log("newAddress",newAddress);
+  const [form] = Form.useForm();
 
-   const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const updateAddress = async (newAddresArr) => {
+    if (isAuthenticated) {
+      await axios
+        .post(`${API_URL}/customerspublic/address`, newAddresArr)
+        .then(() => {
+          setTimeout(() => {
+            getAddress();
+            seTnewAddress({ open: false, id: null });
+          }, 500);
+        })
+        .catch((err) => console.log("err", err));
+    } else {
+      message.success({ content: "Next Stage :)", duration: 3 });
+      seTnewAddress({ open: false, id: null });
+      seTaddress(newAddresArr);
+    }
+  };
 
-   const dispatch = useDispatch();
-   const updateAddress = async (newAddresArr) => {
-      if (isAuthenticated) {
-         await axios
-            .post(`${API_URL}/customerspublic/address`, newAddresArr)
-            .then(() => {
-               setTimeout(() => {
-                  getAddress();
-                  seTnewAddress({ open: false, id: null });
-               }, 500);
-            })
-            .catch((err) => console.log("err", err));
-      } else {
-         message.success({ content: "Next Stage :)", duration: 3 });
-         seTnewAddress({ open: false, id: null });
-         seTaddress(newAddresArr);
+  const updateBasket = async (post) => {
+    if (isAuthenticated) {
+      axios
+        .post(`${API_URL}/basket/${basket[0]._id}`, post)
+        .then(async () => {
+          message.success({
+            content: "Address Selected",
+            duration: 3,
+          });
+          await dispatch(getBasket_r(user.id));
+        })
+        .catch((err) => {
+          message.error({
+            content: "Some Error, Please Try Again",
+            duration: 3,
+          });
+          console.log(err);
+        });
+    } else {
+      message.success({ content: "Next Stage :)", duration: 3 });
+      dispatch(updateBasket_r([post]));
+    }
+  };
+
+  const getAddress = () => {
+    if (isAuthenticated) {
+      AuthService.isAuthenticated().then(async (auth) => {
+        await seTaddress(auth.user.address);
+      });
+    }
+  };
+
+  const onSubmitAddress = async (Data) => {
+    if (newAddress.id) {
+      const newAddresArr = address.filter(
+        (x) => JSON.stringify(x) !== newAddress.id
+      );
+      newAddresArr.push(Data);
+      newAddresArr.reverse();
+
+      updateAddress(newAddresArr);
+    } else {
+      const newAddresArr = address;
+      newAddresArr.push(Data);
+      newAddresArr.reverse();
+
+      updateAddress(newAddresArr);
+    }
+  };
+
+  const onFinishFailedAddress = (errorInfo) => {
+    console.log(errorInfo);
+  };
+
+  const getSelectedAddress = () => {
+    if (basket.length > 0) {
+      if (basket[0].shipping_address) {
+        seTselectedShippingAddress(JSON.stringify(basket[0].shipping_address));
       }
-   };
 
-   const updateBasket = async (post) => {
-      if (isAuthenticated) {
-         axios.post(`${API_URL}/basket/${basket[0]._id}`, post)
-            .then(async () => {
-               message.success({
-                  content: "Address Selected",
-                  duration: 3,
-               });
-               await dispatch(getBasket_r(user.id));
-            })
-            .catch((err) => {
-               message.error({
-                  content: "Some Error, Please Try Again",
-                  duration: 3,
-               });
-               console.log(err);
-            });
-      } else {
-         message.success({ content: "Next Stage :)", duration: 3 });
-         dispatch(updateBasket_r([post]));
+      if (basket[0].billing_address) {
+        seTselectedBillingAddress(JSON.stringify(basket[0].billing_address));
       }
-   };
 
-   const getAddress = () => {
-      if (isAuthenticated) {
-         AuthService.isAuthenticated().then(async (auth) => {
-            await seTaddress(auth.user.address);
-         });
+      const stringifBillingAddres = JSON.stringify(basket[0].billing_address);
+      const stringifShippingAddres = JSON.stringify(basket[0].shipping_address);
+
+      if (stringifBillingAddres != stringifShippingAddres) {
+        seTbillingAdressSame(false);
       }
-   };
+    }
+  };
 
-   const onSubmitAddress = async (Data) => {
-      if (newAddress.id) {
-         const newAddresArr = address.filter(
-            (x) => JSON.stringify(x) !== newAddress.id
-         );
-         newAddresArr.push(Data);
-         newAddresArr.reverse();
+  useEffect(() => {
+    // getCountry();
+    getAddress();
+    getSelectedAddress();
+  }, [basket[0]]);
 
-         updateAddress(newAddresArr);
-
-      } else {
-         const newAddresArr = address;
-         newAddresArr.push(Data);
-         newAddresArr.reverse();
-
-         updateAddress(newAddresArr);
-      }
-   };
-
-   const onFinishFailedAddress = (errorInfo) => {
-      console.log(errorInfo);
-   };
-
-   const getSelectedAddress = () => {
-      if (basket.length > 0) {
-
-         if (basket[0].shipping_address) {
-            seTselectedShippingAddress(JSON.stringify(basket[0].shipping_address));
-         }
-
-         if (basket[0].billing_address) {
-            seTselectedBillingAddress(JSON.stringify(basket[0].billing_address));
-         }
-
-         const stringifBillingAddres = JSON.stringify(basket[0].billing_address);
-         const stringifShippingAddres = JSON.stringify(basket[0].shipping_address);
-
-         if (stringifBillingAddres != stringifShippingAddres) {
-            seTbillingAdressSame(false);
-         }
-
-      }
-   };
-
-   useEffect(() => {
-      // getCountry();
-      getAddress();
-      getSelectedAddress();
-   }, [basket[0]]);
-
-   const onChanheShppingAddress = (data) => {
-
-      if (billingAdressSame) {
-         seTselectedShippingAddress(data);
-         seTselectedBillingAddress(data);
-
-         const newBasketPost = {
-            created_user: {
-               name: user.name,
-               id: user.id,
-            },
-            customer_id: user.id,
-            products: basket[0].products,
-            cargoes_id: basket[0].cargoes_id,
-            total_price: basket[0].total_price,
-            total_discount: basket[0].total_discount,
-            cargo_price: basket[0].cargo_price,
-            cargo_price_discount: basket[0].cargo_price_discount,
-            shipping_address: JSON.parse(data),
-            billing_address: JSON.parse(data),
-         };
-
-         updateBasket(newBasketPost);
-
-      } else {
-         seTselectedShippingAddress(data);
-         const newBasketPost = {
-            created_user: {
-               name: user.name,
-               id: user.id,
-            },
-            customer_id: user.id,
-            products: basket[0].products,
-            cargoes_id: basket[0].cargoes_id,
-            total_price: basket[0].total_price,
-            total_discount: basket[0].total_discount,
-            cargo_price: basket[0].cargo_price,
-            cargo_price_discount: basket[0].cargo_price_discount,
-            shipping_address: JSON.parse(data),
-         };
-
-         updateBasket(newBasketPost);
-
-      }
-   };
-
-   const onChanheBillingAddress = (data) => {
+  const onChanheShppingAddress = (data) => {
+    if (billingAdressSame) {
+      seTselectedShippingAddress(data);
       seTselectedBillingAddress(data);
 
       const newBasketPost = {
-         created_user: {
-            name: user.name,
-            id: user.id,
-         },
-         customer_id: user.id,
-         products: basket[0].products,
-         cargoes_id: basket[0].cargoes_id,
-         total_price: basket[0].total_price,
-         total_discount: basket[0].total_discount,
-         cargo_price: basket[0].cargo_price,
-         cargo_price_discount: basket[0].cargo_price_discount,
-         shipping_address: JSON.parse(selectedShippingAddress),
-         billing_address: JSON.parse(data),
+        created_user: {
+          name: user.name,
+          id: user.id,
+        },
+        customer_id: user.id,
+        products: basket[0].products,
+        cargoes_id: basket[0].cargoes_id,
+        total_price: basket[0].total_price,
+        total_discount: basket[0].total_discount,
+        cargo_price: basket[0].cargo_price,
+        cargo_price_discount: basket[0].cargo_price_discount,
+        shipping_address: JSON.parse(data),
+        billing_address: JSON.parse(data),
       };
+
       updateBasket(newBasketPost);
-   };
-   return (
-      <>
-         <div className="w-full  px-4 pb-10 grid grid-cols-12 gap-x-5">
-            <Button
-               className="float-left col-span-12 font-semibold text-sm w-full py-7 text-center h-full mb-5 "
-               onClick={() => {
-                  seTfields(
-                     Object.entries(address[0] ? address[0] : {}).map(([name]) => ({
-                        name,
-                        value: null,
-                     }))
-                  );
-                  seTnewAddress({ ...newAddress, open: !newAddress.open });
-               }}
-            >
+    } else {
+      seTselectedShippingAddress(data);
+      const newBasketPost = {
+        created_user: {
+          name: user.name,
+          id: user.id,
+        },
+        customer_id: user.id,
+        products: basket[0].products,
+        cargoes_id: basket[0].cargoes_id,
+        total_price: basket[0].total_price,
+        total_discount: basket[0].total_discount,
+        cargo_price: basket[0].cargo_price,
+        cargo_price_discount: basket[0].cargo_price_discount,
+        shipping_address: JSON.parse(data),
+      };
+
+      updateBasket(newBasketPost);
+    }
+  };
+
+  const onChanheBillingAddress = (data) => {
+    seTselectedBillingAddress(data);
+
+    const newBasketPost = {
+      created_user: {
+        name: user.name,
+        id: user.id,
+      },
+      customer_id: user.id,
+      products: basket[0].products,
+      cargoes_id: basket[0].cargoes_id,
+      total_price: basket[0].total_price,
+      total_discount: basket[0].total_discount,
+      cargo_price: basket[0].cargo_price,
+      cargo_price_discount: basket[0].cargo_price_discount,
+      shipping_address: JSON.parse(selectedShippingAddress),
+      billing_address: JSON.parse(data),
+    };
+    updateBasket(newBasketPost);
+  };
+  return (
+    <>
+      <div className="w-full  px-4 pb-10 grid grid-cols-12 gap-x-5">
+        <Button
+          className="float-left col-span-12 font-semibold text-sm w-full py-7 text-center h-full mb-5 "
+          onClick={() => {
+            seTfields(
+              Object.entries(address[0] ? address[0] : {}).map(([name]) => ({
+                name,
+                value: null,
+              }))
+            );
+            seTnewAddress({ ...newAddress, open: !newAddress.open });
+          }}
+        >
           New Address
-            </Button>
+        </Button>
 
-            <div className="col-span-12 float-left mt-10 -mb-16 z-10  text-right">
-               <Checkbox
-                  className=" w-auto float-right "
-                  onChange={(vall) => {
-                     seTbillingAdressSame(!billingAdressSame);
-                     if (vall.target.checked) {
-                        onChanheBillingAddress(selectedShippingAddress);
-                        seTselectedBillingAddress(selectedShippingAddress);
-                     }
-                  }}
-                  checked={billingAdressSame}
-               >
+        <div className="col-span-12 float-left mt-10 -mb-16 z-10  text-right">
+          <Checkbox
+            className=" w-auto float-right "
+            onChange={(vall) => {
+              seTbillingAdressSame(!billingAdressSame);
+              if (vall.target.checked) {
+                onChanheBillingAddress(selectedShippingAddress);
+                seTselectedBillingAddress(selectedShippingAddress);
+              }
+            }}
+            checked={billingAdressSame}
+          >
             Billing address is same
-               </Checkbox>
-            </div>
-            <div
-               className={
-                  billingAdressSame ? "col-span-12" : "col-span-12 sm:col-span-6"
-               }
-            >
-               <div className="text-lg  font-semibold w-full sm:mt-10 mt-16">
+          </Checkbox>
+        </div>
+        <div
+          className={
+            billingAdressSame ? "col-span-12" : "col-span-12 sm:col-span-6"
+          }
+        >
+          <div className="text-lg  font-semibold w-full sm:mt-10 mt-16">
             Shipping Address
-               </div>
+          </div>
 
-               <div className="w-full ">
-                  {address &&
+          <div className="w-full ">
+            {address &&
               address.map((x, i) => (
-                 <AddressSelect
-                    key={i}
-                    Data={x}
-                    seTnewAddress={seTnewAddress}
-                    seTfields={seTfields}
-                    newAddress={newAddress}
-                    selectedShippingAddress={selectedShippingAddress}
-                    onChanheShppingAddress={onChanheShppingAddress}
-                 />
+                <AddressSelect
+                  key={i}
+                  Data={x}
+                  seTnewAddress={seTnewAddress}
+                  seTfields={seTfields}
+                  newAddress={newAddress}
+                  selectedShippingAddress={selectedShippingAddress}
+                  onChanheShppingAddress={onChanheShppingAddress}
+                />
               ))}
-               </div>
-            </div>
-            <div
-               className={billingAdressSame ? "hidden" : "col-span-12 sm:col-span-6"}
-            >
-               <div className="text-lg font-semibold w-full   sm:mt-10 mt-16">
+          </div>
+        </div>
+        <div
+          className={billingAdressSame ? "hidden" : "col-span-12 sm:col-span-6"}
+        >
+          <div className="text-lg font-semibold w-full   sm:mt-10 mt-16">
             Billing Address{" "}
-               </div>
-              
-            </div>
+          </div>
+        </div>
 
-            {/* <Drawer
+        {/* <Drawer
                // style={{"style="}}
                title="Address"
                placement="left"
@@ -270,11 +262,11 @@ console.log("newAddress",newAddress);
                }}
                visible={newAddress.open}
             > */}
-            <Form
+        <Form
           onFinish={onSubmitAddress}
           fields={fields}
           scrollToFirstError
-         className="w-[800px] ml-20"
+          className=" xl:w-[600px] md:w-[500px] w-[200px] md:ml-20 ml-10"
         >
           <Form.Item
             className="float-left  w-full mx-0 px-0"
@@ -310,11 +302,9 @@ console.log("newAddress",newAddress);
             fieldKey="country_id"
           >
             <Input
-                           placeholder={
-                              intl.messages["app.pages.customers.addressDistrict"]
-                           }
-                           autoComplete="none"
-                        />
+              placeholder={intl.messages["app.pages.customers.addressDistrict"]}
+              autoComplete="none"
+            />
           </Form.Item>
 
           <Form.Item
@@ -324,10 +314,10 @@ console.log("newAddress",newAddress);
             label="City"
             rules={[{ required: true, message: "Missing Area" }]}
           >
-              <Input
-                placeholder={intl.messages["app.pages.customers.addressTown"]}
-                autocomplete="chrome-off"
-              />
+            <Input
+              placeholder={intl.messages["app.pages.customers.addressTown"]}
+              autocomplete="chrome-off"
+            />
           </Form.Item>
 
           <Form.Item
@@ -337,10 +327,10 @@ console.log("newAddress",newAddress);
             fieldKey="town_id"
             rules={[{ required: true, message: "Missing Area" }]}
           >
-             <Input
-                placeholder={intl.messages["app.pages.customers.addressTown"]}
-                autocomplete="chrome-off"
-              />
+            <Input
+              placeholder={intl.messages["app.pages.customers.addressTown"]}
+              autocomplete="chrome-off"
+            />
           </Form.Item>
 
           <Form.Item
@@ -351,11 +341,9 @@ console.log("newAddress",newAddress);
             rules={[{ required: true, message: "Missing Area" }]}
           >
             <Input
-                placeholder={
-                  intl.messages["app.pages.customers.addressDistrict"]
-                }
-                autocomplete="chrome-off"
-              />
+              placeholder={intl.messages["app.pages.customers.addressDistrict"]}
+              autocomplete="chrome-off"
+            />
           </Form.Item>
 
           <Form.Item
@@ -366,11 +354,11 @@ console.log("newAddress",newAddress);
             rules={[{ required: true, message: "Missing Area" }]}
           >
             <Input
-                placeholder={
-                  intl.messages["app.pages.customers.addressNeighbour"]
-                }
-                autocomplete="chrome-off"
-              />
+              placeholder={
+                intl.messages["app.pages.customers.addressNeighbour"]
+              }
+              autocomplete="chrome-off"
+            />
           </Form.Item>
           <Form.Item
             className="float-left w-full  mx-0 px-0"
@@ -389,11 +377,11 @@ console.log("newAddress",newAddress);
             Save
           </Button>
         </Form>
-               
-            {/* </Drawer> */}
-         </div>
-      </>
-   );
+
+        {/* </Drawer> */}
+      </div>
+    </>
+  );
 };
 
 export default Default;
